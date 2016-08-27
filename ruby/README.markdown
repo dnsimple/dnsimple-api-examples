@@ -1,4 +1,4 @@
-# DNSimple API Ruby Example
+# DNSimple API Ruby Examples
 
 The scripts in this directory demonstrate how to use the DNSimple Ruby API wrapper to connect to the DNSimple API.
 
