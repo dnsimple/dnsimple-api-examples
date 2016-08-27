@@ -11,7 +11,7 @@ First you will need to ensure bundler is installed and then run `bundle`.
 Once the dependencies are installed, create a file called `token.rb` and put the following into it:
 
 ```ruby
-token = "your_token"
+TOKEN = "your_token"
 ```
 
 Where `your_token` is a user token you generated on the DNSimple site in your account management screen.
