@@ -6,6 +6,6 @@ The scripts in this directory demonstrate how to use curl to connect to the DNSi
 
 Make sure you have curl installed first.
 
-Once you do, run each script:
+Once you do, run scripts like this:
 
-`./badarg.sh`
+`TOKEN=token ./script.sh`
