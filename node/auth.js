@@ -3,6 +3,8 @@ var client = require('dnsimple')({
   accessToken: process.env.TOKEN,
 });
 
-client.identity.whoami(function(error, response) {
+client.identity.whoami().then(function(response) {
   console.log(response);
+}, function(error) {
+  console.log(error);
 });
