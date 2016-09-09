@@ -1,4 +1,4 @@
-HTTPoison.start
+Dnsimple.start
 
 client = %Dnsimple.Client{access_token: Application.get_env(:dnsimple, :access_token), base_url: "https://api.sandbox.dnsimple.com/"}
 
