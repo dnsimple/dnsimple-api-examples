@@ -1,3 +1,5 @@
+'use strict';
+
 var client = require('dnsimple')({
   baseUrl: 'https://api.sandbox.dnsimple.com',
 });
