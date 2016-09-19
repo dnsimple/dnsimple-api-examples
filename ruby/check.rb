@@ -2,7 +2,7 @@
 
 # To run this script, follow the README to set up your token and then run it as follows:
 #
-# `DOMAIN_NAME=example.com ./check.rb`
+# `./check.rb example.com`
 #
 require 'pp'
 require 'dnsimple'
@@ -30,7 +30,7 @@ account_id = response.data.account.id
 # It expects the account ID and the domain name to check to be passed as arguments.
 #
 # In this example we simply retrieve the first page of domains.
-response = client.registrar.check_domain(account_id, ENV['DOMAIN_NAME'])
+response = client.registrar.check_domain(account_id, ARGV[0])
 
 # Pretty-print the entire response object so you can see what is inside.
 pp response
