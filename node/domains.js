@@ -1,5 +1,7 @@
 'use strict';
 
+// Usage: TOKEN=token node domains.js
+
 var client = require('dnsimple')({
   baseUrl: 'https://api.sandbox.dnsimple.com',
   accessToken: process.env.TOKEN,

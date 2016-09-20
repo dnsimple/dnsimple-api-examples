@@ -13,3 +13,11 @@ or
 ```
 TOKEN=token node auth.js
 ```
+
+Some scripts require command line arguments. For example, to check availability of a domain:
+
+```
+TOKEN=token node check.js example.com
+```
+
+Each script should document its usage.
