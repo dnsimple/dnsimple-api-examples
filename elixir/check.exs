@@ -6,6 +6,5 @@ client = %Dnsimple.Client{access_token: Application.get_env(:dnsimple, :access_t
 account_id = response.data.account["id"]
 
 name = Enum.at(System.argv, 0)
-IO.puts "Checking #{name}"
 
 IO.inspect Dnsimple.Registrar.check_domain(client, account_id, name)
