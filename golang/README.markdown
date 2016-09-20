@@ -17,3 +17,9 @@ Each directory in `cmd` includes a .go file that can be executed. For example:
 To run commands with the token:
 
 `TOKEN=your-token go run cmd/auth/auth.go`
+
+Some commands require additional command line arguments. For example:
+
+`TOKEN=your-token go run cmd/check/check.go example.com`
+
+Consult the code for each example for additional argument requirements.

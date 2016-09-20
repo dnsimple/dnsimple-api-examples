@@ -1,3 +1,4 @@
+// Usage: go run cmd/badauth/badauth.go
 package main
 
 import (
