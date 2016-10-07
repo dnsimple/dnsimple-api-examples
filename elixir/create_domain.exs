@@ -1,6 +1,6 @@
 # Usage: mix run create_domain.exs example.com
 
-HTTPoison.start
+Dnsimple.start
 
 client = %Dnsimple.Client{
   access_token: Application.get_env(:dnsimple, :access_token),
