@@ -1,6 +1,6 @@
 'use strict';
 
-// Usage: TOKEN=token node create_domain.js
+// Usage: TOKEN=token node create_domain.js example.com
 
 var client = require('dnsimple')({
   baseUrl: 'https://api.sandbox.dnsimple.com',
