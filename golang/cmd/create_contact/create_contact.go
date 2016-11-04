@@ -27,6 +27,15 @@ func main() {
 		os.Exit(1)
 	}
 
+	// this example only works with account tokens
+	// user tokens are perfectly fine, but in order to get the account ID
+	// you need to query the method to list all the accounts associated with the user
+	// and select one. Account token, instead, uniquely identifies an account.
+	if whoamiResponse.Data.User != nil {
+		fmt.Printf("You are using an User token, this example only works with Account tokens")
+		os.Exit(1)
+	}
+
 	accountId := strconv.Itoa(whoamiResponse.Data.Account.ID)
 
 	contactData := []byte(os.Args[1])
