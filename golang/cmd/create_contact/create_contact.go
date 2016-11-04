@@ -31,7 +31,7 @@ func main() {
 
 	contactData := []byte(os.Args[1])
 
-	var contact *dnsimple.Contact
+	var contact dnsimple.Contact
 	err = json.Unmarshal(contactData, &contact)
 	if err != nil {
 		fmt.Printf("Error parsing contact JSON: %v\n", err)
@@ -39,7 +39,7 @@ func main() {
 	}
 
 	fmt.Printf("Adding contact %v\n", contact)
-	createContactResponse, err := client.Contacts.CreateContact(accountId, *contact)
+	createContactResponse, err := client.Contacts.CreateContact(accountId, contact)
 	if err != nil {
 		fmt.Printf("CreateContact() returned error: %v\n", err)
 		os.Exit(1)
