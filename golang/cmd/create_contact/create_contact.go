@@ -29,9 +29,7 @@ func main() {
 
 	accountId := strconv.Itoa(whoamiResponse.Data.Account.ID)
 
-	fmt.Printf("Contact data: %v\n", os.Args[1])
 	contactData := []byte(os.Args[1])
-	fmt.Printf("Contact data as bytes length: %v\n", len(contactData))
 
 	var contact *dnsimple.Contact
 	err = json.Unmarshal(contactData, &contact)
