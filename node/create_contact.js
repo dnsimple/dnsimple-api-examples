@@ -1,6 +1,6 @@
 'use strict';
 
-// Usage: TOKEN=token node create_contact.js '{"first_name":"John","last_name":"Smith","email":"john@example.com"}'
+// Usage: TOKEN=token node create_contact.js '{"email":"john.smith@example.com","first_name":"John","last_name":"Smith","address1":"111 SW 1st Street","city":"Miami","state_province":"FL","postal_code":"11111","country":"US","phone":"+1 321 555 4444"}'
 
 var client = require('dnsimple')({
   baseUrl: 'https://api.sandbox.dnsimple.com',

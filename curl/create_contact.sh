@@ -6,6 +6,6 @@
 #
 # For example:
 #
-# `./create_contact.sh 111 '{"email":"anthony@example.com","first_name":"Anthony","last_name":"Eden","address1":"111 SW 1st Street","city":"Miami","state_province":"FL","postal_code":"11111","country":"US","phone":"+1 321 555 4444"}'`
+# `./create_contact.sh 111 '{"email":"john.smith@example.com","first_name":"John","last_name":"Smith","address1":"111 SW 1st Street","city":"Miami","state_province":"FL","postal_code":"11111","country":"US","phone":"+1 321 555 4444"}'`
 curl -i "https://api.sandbox.dnsimple.com/v2/$1/contacts" -H "Authorization: Bearer ${TOKEN}" -H "Content-type: application/json" -H "Accepts: application/json" -X POST -d "$2"
 
