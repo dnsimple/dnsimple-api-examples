@@ -34,7 +34,7 @@ func main() {
 	fmt.Printf("Contact data as bytes length: %v\n", len(contactData))
 
 	var contact *dnsimple.Contact
-	err = json.Unmarshal(contactData, contact)
+	err = json.Unmarshal(contactData, &contact)
 	if err != nil {
 		fmt.Printf("Error parsing contact JSON: %v\n", err)
 		os.Exit(1)
