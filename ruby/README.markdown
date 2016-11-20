@@ -33,8 +33,3 @@ And
 `ruby badauth.rb`
 
 Should both work.
-
-## Environments
-
-All scripts are set up to run against the DNSimple sandbox API by default. If you wish to run a script against the
-production API, add a command argument `prod` in the appropriate position when calling a script.

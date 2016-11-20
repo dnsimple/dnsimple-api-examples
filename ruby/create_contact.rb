@@ -1,21 +1,15 @@
 #!/usr/bin/env ruby
 
-# Usage Sandbox: create_contact.rb '{"email":"john.smith@example.com","first_name":"John","last_name":"Smith","address1":"111 SW 1st Street","city":"Miami","state_province":"FL","postal_code":"11111","country":"US","phone":"+1 321 555 4444"}'
-# Usage Prod: create_contact.rb prod '{"email":"john.smith@example.com","first_name":"John","last_name":"Smith","address1":"111 SW 1st Street","city":"Miami","state_province":"FL","postal_code":"11111","country":"US","phone":"+1 321 555 4444"}'
+# Usage: create_contact.rb '{"email":"john.smith@example.com","first_name":"John","last_name":"Smith","address1":"111 SW 1st Street","city":"Miami","state_province":"FL","postal_code":"11111","country":"US","phone":"+1 321 555 4444"}'
 
 require 'pp'
 require 'dnsimple'
 require_relative 'token'
 
-base_url =  'https://api.sandbox.dnsimple.com'
-ARGV.each do |arg|
-  base_url = nil if arg.downcase == 'prod' || arg.downcase == 'production'
-end
-
 # Construct a client instance.
 #
-# If you want to connect to production, add command argument `prod` before the user hash argument.
-client = Dnsimple::Client.new(base_url: base_url, access_token: TOKEN)
+# If you want to connect to production, omit the `base_url` option.
+client = Dnsimple::Client.new(base_url: "https://api.sandbox.dnsimple.com", access_token: TOKEN)
 
 # All calls to client pass through a service. In this case, `client.identity` is the identity service.
 #
