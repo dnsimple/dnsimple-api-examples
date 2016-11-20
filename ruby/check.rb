@@ -3,15 +3,22 @@
 # To run this script, follow the README to set up your token and then run it as follows:
 #
 # `./check.rb example.com`
+#        OR
+# `./check.rb prod example.com`
 #
 require 'pp'
 require 'dnsimple'
 require_relative 'token'
 
+base_url =  'https://api.sandbox.dnsimple.com'
+ARGV.each do |arg|
+  base_url = nil if arg.downcase == 'prod' || arg.downcase == 'production'
+end
+
 # Construct a client instance.
 #
-# If you want to connect to production, omit the `base_url` option.
-client = Dnsimple::Client.new(base_url: "https://api.sandbox.dnsimple.com", access_token: TOKEN)
+# If you want to connect to production, add command argument `prod` before the domain argument.
+client = Dnsimple::Client.new(base_url: base_url, access_token: TOKEN)
 
 # All calls to client pass through a service. In this case, `client.identity` is the identity service.
 #
@@ -30,7 +37,7 @@ account_id = response.data.account.id
 # It expects the account ID and the domain name to check to be passed as arguments.
 #
 # In this example we simply retrieve the first page of domains.
-response = client.registrar.check_domain(account_id, ARGV[0])
+response = client.registrar.check_domain(account_id, ARGV.last)
 
 # Pretty-print the entire response object so you can see what is inside.
 pp response

@@ -3,10 +3,15 @@ require 'pp'
 require 'dnsimple'
 require_relative 'token'
 
+base_url =  'https://api.sandbox.dnsimple.com'
+ARGV.each do |arg|
+  base_url = nil if arg.downcase == 'prod' || arg.downcase == 'production'
+end
+
 # Construct a client instance.
 #
-# If you want to connect to production, omit the `base_url` option.
-client = Dnsimple::Client.new(base_url: "https://api.sandbox.dnsimple.com", access_token: TOKEN)
+# If you want to connect to production, add command argument `prod`.
+client = Dnsimple::Client.new(base_url: base_url, access_token: TOKEN)
 
 # All calls to client pass through a service. In this case, `client.identity` is the identity service.
 #
@@ -29,7 +34,7 @@ account_id = response.data.account.id
 # In this example we simply retrieve the first page of domains.
 response = client.domains.domains(account_id)
 
-# Just like the whoami response above, the response object from the `#domains` method has a 
+# Just like the whoami response above, the response object from the `#domains` method has a
 # data attribute. In this case it is an array with multiple domains.
 domains = response.data
 

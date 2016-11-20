@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
+
+# This script assumes a client token. It will work with an account token but the information is not really useful.
+# If all you have is a client token, you can run this script, note the account id, and hard code that into
+# other scripts where it is supplying an account id from the whoami endpoint.
+
+
 require 'pp'
 require 'dnsimple'
 require_relative 'token'
@@ -17,7 +23,7 @@ client = Dnsimple::Client.new(base_url: base_url, access_token: TOKEN)
 #
 # Dnsimple::Client::Identity#whoami is the method for retrieving the account details for your
 # current credentials via the DNSimple API.
-response = client.identity.whoami
+response = client.accounts.list
 
 # Note:
 #      data.user property will be nil if an account token was supplied
