@@ -1,6 +1,6 @@
 # Contributing to DNSimple API Examples
 
-If you would like to contribut to these examples please submit a pull request.
+If you would like to contribute to these examples please submit a pull request.
 
 1. Fork this repository.
 1. Clone the forked repository to your development machine.

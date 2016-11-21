@@ -29,7 +29,7 @@ account_id = response.data.account.id
 # In this example we simply retrieve the first page of domains.
 response = client.domains.domains(account_id)
 
-# Just like the whoami response above, the response object from the `#domains` method has a 
+# Just like the whoami response above, the response object from the `#domains` method has a
 # data attribute. In this case it is an array with multiple domains.
 domains = response.data
 
