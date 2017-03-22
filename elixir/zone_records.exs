@@ -1,7 +1,5 @@
 # Usage: mix run zone_record.exs example.com
 
-Dnsimple.start
-
 client = %Dnsimple.Client{
   access_token: Application.get_env(:dnsimple, :access_token),
   base_url: "https://api.sandbox.dnsimple.com/"
@@ -16,7 +14,7 @@ end
 name = List.last(System.argv)
 
 # List all the DNS records for the given domain
-case Dnsimple.Zones.list_zone_records(client, account["id"], name) do
+case Dnsimple.Zones.list_zone_records(client, account.id, name) do
   {:ok, response} -> IO.inspect response.data
   {:error, error} -> raise RuntimeError, message: error.message
 end
