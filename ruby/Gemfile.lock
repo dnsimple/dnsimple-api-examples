@@ -1,17 +1,17 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    dnsimple (3.1.0)
+    dnsimple (4.3.0)
       httparty
-    httparty (0.14.0)
+    httparty (0.15.6)
       multi_xml (>= 0.5.2)
-    multi_xml (0.5.5)
+    multi_xml (0.6.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  dnsimple (~> 3.0)
+  dnsimple (~> 4.0)
 
 BUNDLED WITH
-   1.12.5
+   1.16.0
