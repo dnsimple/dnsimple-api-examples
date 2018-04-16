@@ -6,11 +6,12 @@ The files in this directory demonstrate how to use the DNSimple Golang API wrapp
 
 ```shell
 go get github.com/dnsimple/dnsimple-go/dnsimple
+go get golang.org/x/oauth2
 ```
 
 ## Running
 
-Each directory in `cmd` includes a .go file that can be executed. For example:
+Each directory in `cmd` includes a .go file that can be executed using `go run`. For example:
 
 ```shell
 go run cmd/badauth/badauth.go
