@@ -1,9 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    dnsimple (4.3.0)
+    dnsimple (4.4.0)
       httparty
-    httparty (0.15.6)
+    httparty (0.16.2)
       multi_xml (>= 0.5.2)
     multi_xml (0.6.0)
 
