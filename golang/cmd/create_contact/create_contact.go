@@ -2,12 +2,14 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
 
 	"github.com/dnsimple/dnsimple-go/dnsimple"
+	"golang.org/x/oauth2"
 )
 
 func main() {
@@ -17,7 +19,10 @@ func main() {
 	}
 
 	oauthToken := os.Getenv("TOKEN")
-	client := dnsimple.NewClient(dnsimple.NewOauthTokenCredentials(oauthToken))
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: oauthToken})
+	tc := oauth2.NewClient(context.Background(), ts)
+
+	client := dnsimple.NewClient(tc)
 	client.BaseURL = "https://api.sandbox.dnsimple.com"
 
 	// get the current authenticated account (if you don't know who you are)
