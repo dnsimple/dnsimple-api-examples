@@ -2,6 +2,8 @@
 
 The scripts in this directory demonstrate how to use the DNSimple Node API wrapper to connect to the DNSimple API.
 
+You will need to have the DNSimple node client installed. You can install it using `npm install dnsimple`.
+
 # Running
 
 ```
