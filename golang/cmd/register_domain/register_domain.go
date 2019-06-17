@@ -26,7 +26,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	accountId := strconv.Itoa(whoamiResponse.Data.Account.ID)
+	accountId := strconv.FormatInt(whoamiResponse.Data.Account.ID, 10)
 
 	domainName := os.Args[1]
 	fmt.Printf("Registering domain %v\n", domainName)

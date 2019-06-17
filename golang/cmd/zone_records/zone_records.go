@@ -26,7 +26,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	accountId := strconv.Itoa(whoamiResponse.Data.Account.ID)
+	accountId := strconv.FormatInt(whoamiResponse.Data.Account.ID, 10)
 
 	listZoneRecordsResponse, err := client.Zones.ListRecords(accountId, os.Args[1], nil)
 	if err != nil {
