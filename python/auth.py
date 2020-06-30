@@ -4,7 +4,7 @@
 # If all you have is a client token, you can run this script, note the account id, and hard code that into
 # other scripts where it is supplying an account id from the whoami endpoint.
 from dnsimple import Client
-from .auth_token import token
+from auth_token import token
 
 """
 Construct a client instance.

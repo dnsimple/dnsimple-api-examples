@@ -6,7 +6,7 @@
 
 from dnsimple import Client
 
-from .auth_token import token
+from auth_token import token
 
 """
 Construct a client instance.

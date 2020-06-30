@@ -5,7 +5,7 @@
 # other scripts where it is supplying an account id from the whoami endpoint.
 import sys
 
-from .auth_token import token
+from auth_token import token
 from dnsimple import Client
 
 """
