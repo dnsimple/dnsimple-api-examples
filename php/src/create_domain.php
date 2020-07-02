@@ -23,11 +23,11 @@ $client = new Client($token, ["base_uri" => "https://api.sandbox.dnsimple.com"])
 // access to the resulting account object.
 //
 // There the account ID is extracted for use in future calls.
-$accountId = $client->Identity->whoami()->getData()->account->id;
+$accountId = $client->identity->whoami()->getData()->account->id;
 
 // Dnsimple\Client\Domains->createDomain is the method to create a new domain in DNSimple. Note that this
 // does not register the domain, it simply adds the domain for management and DNS service.
-$response = $client->Domains->createDomain($accountId, ["name" => $argv[1]]);
+$response = $client->domains->createDomain($accountId, ["name" => $argv[1]]);
 
 // Printing the response and data objects so you can see what's inside.
 print_r($response);

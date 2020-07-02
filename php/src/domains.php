@@ -23,7 +23,7 @@ $client = new Client($token, ["base_uri" => "https://api.sandbox.dnsimple.com"])
 // access to the resulting account object.
 //
 // There the account ID is extracted for use in future calls.
-$accountId = $client->Identity->whoami()->getData()->account->id;
+$accountId = $client->identity->whoami()->getData()->account->id;
 
 // Dnsimple\Client\Domains->listDomains is the method for retrieving a page from the list of domains
 // in an account. The default page size is 30 domains. If you account has more that 30 domains then
@@ -31,7 +31,7 @@ $accountId = $client->Identity->whoami()->getData()->account->id;
 // attributes.
 //
 // In this example we simply retrieve the first page of domains.
-$response = $client->Domains->listDomains($accountId);
+$response = $client->domains->listDomains($accountId);
 
 // Printing the response and data objects so you can see what's inside.
 print_r($response);

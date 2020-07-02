@@ -18,4 +18,4 @@ $client = new Client("fake", ["base_uri" => "https://api.sandbox.dnsimple.com"])
 // current credentials via the DNSimple API.
 //
 // In this case the call with fail raising an exception.
-$response = $client->Identity->whoami();
+$response = $client->identity->whoami();

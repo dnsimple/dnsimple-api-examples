@@ -17,7 +17,7 @@ $client = new Client($token, ["base_uri" => "https://api.sandbox.dnsimple.com"])
 //
 // Dnsimple\Client\Accounts->listAccounts is the method for retrieving the list of accounts for your
 // current credentials via the DNSimple API.
-$response = $client->Accounts->listAccounts();
+$response = $client->accounts->listAccounts();
 
 // Printing the response and data objects so you can see what's inside.
 print_r($response);

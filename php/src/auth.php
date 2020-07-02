@@ -17,7 +17,7 @@ $client = new Client($token, ["base_uri" => "https://api.sandbox.dnsimple.com"])
 //
 // Dnsimple\Client\Identity->whoami is the method for retrieving the account details for your
 // current credentials via the DNSimple API.
-$response = $client->Identity->whoami();
+$response = $client->identity->whoami();
 
 // Note:
 // $response->getData()->user will be null if an account token was supplied (this examples case)

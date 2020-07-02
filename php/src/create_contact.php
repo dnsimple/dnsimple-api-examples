@@ -23,7 +23,7 @@ $client = new Client($token, ["base_uri" => "https://api.sandbox.dnsimple.com"])
 // access to the resulting account object.
 //
 // There the account ID is extracted for use in future calls.
-$accountId = $client->Identity->whoami()->getData()->account->id;
+$accountId = $client->identity->whoami()->getData()->account->id;
 
 // These are the attributes needed to create a contact. Please feel free to modify the values when
 // you are testing this by yourself.
@@ -43,7 +43,7 @@ $attributes = [
 //
 // It expects the account ID and a array containing the key/value pairs with the data needed
 // to create the contact.
-$response = $client->Contacts->createContact($accountId, $attributes);
+$response = $client->contacts->createContact($accountId, $attributes);
 
 // Printing the response and data objects so you can see what's inside.
 print_r($response);
