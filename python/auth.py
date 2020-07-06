@@ -28,4 +28,3 @@ Note:
 account = response.data.account
 
 print(f'Account= id:{account.id}, email:{account.email}, plan_identifier:{account.plan_identifier}')
-
