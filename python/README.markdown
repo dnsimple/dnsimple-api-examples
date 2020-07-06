@@ -16,6 +16,7 @@ You can also install the Python API client by cloning it from github
 
 and installing it locally to your system
 
+`pip install -r <path-to-your-local-clone>/requirements.txt`
 `pip install <path-to-your-local-clone>`
 
 Now create a file called `token.txt` and put your token in it:
