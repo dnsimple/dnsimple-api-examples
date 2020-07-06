@@ -20,4 +20,7 @@ current credentials via the DNSimple API.
 
 In this case the call will fail and raise an exception.
 """
-whoami = client.identity.whoami()
+try:
+    whoami = client.identity.whoami()
+except DNSimpleException as e:
+    print(f'Exception Raised= {e.message}')
