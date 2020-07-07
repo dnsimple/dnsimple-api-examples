@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
-# This script assumes a client token. It will work with an account token but the information is not really useful.
-# If all you have is a client token, you can run this script, note the account id, and hard code that into
-# other scripts where it is supplying an account id from the whoami endpoint.
-from dnsimple import Client
+# This script assumes an account token.
+#
+# If all you have is a user token you can run this script, by passing email and password when creating the client
+# like so:
+# `client = Client(sandbox=True, email=<your_email>, password=<your_password>`
+
+from dnsimple import Client, DNSimpleException
 
 """
 Construct a client instance.
