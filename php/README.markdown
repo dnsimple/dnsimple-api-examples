@@ -6,7 +6,7 @@ The scripts in this directory demonstrate how to use the DNSimple PHP API wrappe
 
 First you will need to ensure PHP is installed and then run `php -v`.
 
-Once you install the dependencies, create a file called `token.php` and put the following into it:
+Once you install the dependencies (via [composer](https://getcomposer.org/)), create a file called `token.php` and put the following into it:
 
 ```php
 <?php
