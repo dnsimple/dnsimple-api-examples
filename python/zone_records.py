@@ -39,8 +39,18 @@ account_id = response.data.account.id
 
 """
 dnsimple.client.zones.list_records is the method to list the records in a DNSimple zone.
-"""
-response = client.zones.list_records(account_id, str(sys.argv[1]))
 
-for record in response.data:
-    print(f'- {record.content} ({record.id})')
+In the example below we are iterating through all the zone records of a given domain.
+"""
+page = 1
+
+while True:
+    response = client.zones.list_records(account_id, str(sys.argv[1]), page=page)
+
+    for record in response.data:
+        print(f'- {record.content} ({record.id})')
+
+    if page == response.pagination.total_pages:
+        break
+
+    page += 1
