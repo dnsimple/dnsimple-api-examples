@@ -14,7 +14,7 @@ Once you install the dependencies, create a file called `token.php` and put the 
 $token = "your_token";
 ```
 
-Where `your_token` is an account token you generated on the DNSimple site from an account screen. Most of the example
+Where `your_token` is an account token (_we recommend using your sandbox environment token to test_) you generated on the DNSimple site from an account screen. Most of the example
 scripts will expect this type of token. There is another token, a user token, which is generated on the DNSimple site
 in your account management screen. The user token will be accepted, but since it is scoped to a user, which may access
 multiple accounts, no account information is populated from the whoami endpoint when a user token is supplied, therefore
