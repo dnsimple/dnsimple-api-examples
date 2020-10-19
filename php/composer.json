@@ -1,0 +1,22 @@
+{
+  "name": "dnsimple-api-examples/php",
+  "type": "library",
+  "description": "Examples of how to use the PHP API client",
+  "homepage": "https://github.com/dnsimple/dnsimple-api-examples",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Enrique Comba Riepenhausen",
+      "email": "enrique@ecomba.pro",
+      "homepage": "https://ecomba.pro"
+    }
+  ],
+  "require": {
+    "dnsimple/dnsimple": ""
+  },
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  }
+}
