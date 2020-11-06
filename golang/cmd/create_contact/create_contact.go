@@ -26,7 +26,7 @@ func main() {
 	client.BaseURL = "https://api.sandbox.dnsimple.com"
 
 	// get the current authenticated account (if you don't know who you are)
-	whoamiResponse, err := client.Identity.Whoami()
+	whoamiResponse, err := client.Identity.Whoami(context.Background())
 	if err != nil {
 		fmt.Printf("Whoami() returned error: %v\n", err)
 		os.Exit(1)
@@ -53,7 +53,7 @@ func main() {
 	}
 
 	fmt.Printf("Adding contact %v\n", contact)
-	createContactResponse, err := client.Contacts.CreateContact(accountId, contact)
+	createContactResponse, err := client.Contacts.CreateContact(context.Background(), accountId, contact)
 	if err != nil {
 		fmt.Printf("CreateContact() returned error: %v\n", err)
 		os.Exit(1)

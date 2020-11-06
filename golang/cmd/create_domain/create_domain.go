@@ -20,7 +20,7 @@ func main() {
 	client.BaseURL = "https://api.sandbox.dnsimple.com"
 
 	// get the current authenticated account (if you don't know who you are)
-	whoamiResponse, err := client.Identity.Whoami()
+	whoamiResponse, err := client.Identity.Whoami(context.Background())
 	if err != nil {
 		fmt.Printf("Whoami() returned error: %v\n", err)
 		os.Exit(1)
@@ -31,7 +31,7 @@ func main() {
 	name := os.Args[1]
 	fmt.Printf("Adding domain %v\n", name)
 	domain := dnsimple.Domain{Name: name}
-	createDomainResponse, err := client.Domains.CreateDomain(accountId, domain)
+	createDomainResponse, err := client.Domains.CreateDomain(context.Background(), accountId, domain)
 	if err != nil {
 		fmt.Printf("CreateDomain() returned error: %v\n", err)
 		os.Exit(1)
