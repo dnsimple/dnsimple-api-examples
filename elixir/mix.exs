@@ -28,7 +28,7 @@ defmodule DnsimpleApiExample.Mixfile do
   # Type "mix help deps" for more es and options
   defp deps do
     [
-      {:dnsimple, git: "https://github.com/dnsimple/dnsimple-elixir.git"}
+      {:dnsimple, git: "https://github.com/dnsimple/dnsimple-elixir.git", branch: "main"}
     ]
   end
 end

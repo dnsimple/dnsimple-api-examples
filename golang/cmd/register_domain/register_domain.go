@@ -20,7 +20,7 @@ func main() {
 	client.BaseURL = "https://api.sandbox.dnsimple.com"
 
 	// get the current authenticated account (if you don't know who you are)
-	whoamiResponse, err := client.Identity.Whoami()
+	whoamiResponse, err := client.Identity.Whoami(context.Background())
 	if err != nil {
 		fmt.Printf("Whoami() returned error: %v\n", err)
 		os.Exit(1)
@@ -30,7 +30,7 @@ func main() {
 
 	domainName := os.Args[1]
 	fmt.Printf("Registering domain %v\n", domainName)
-	contacts, err := client.Contacts.ListContacts(accountId, nil)
+	contacts, err := client.Contacts.ListContacts(context.Background(), accountId, nil)
 
 	if err != nil {
 		fmt.Printf("ListContacts() returned error: %v\n", err)
@@ -44,7 +44,7 @@ func main() {
 
 	contact := contacts.Data[0]
 
-	registerDomainResponse, err := client.Registrar.RegisterDomain(accountId, domainName, &dnsimple.DomainRegisterRequest{RegistrantID: contact.ID})
+	registerDomainResponse, err := client.Registrar.RegisterDomain(context.Background(), accountId, domainName, &dnsimple.DomainRegisterRequest{RegistrantID: contact.ID})
 	if err != nil {
 		fmt.Printf("RegisterDomain() returned error: %v\n", err)
 		os.Exit(1)

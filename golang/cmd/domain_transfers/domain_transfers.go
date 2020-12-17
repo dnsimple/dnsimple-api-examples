@@ -1,4 +1,5 @@
-// Usage: TOKEN=token go run cmd/domains/domains.go
+// Usage: TOKEN=token go run cmd/domain_transfers/domain_transfers.go example.com 42
+// where 42 is the domain transfer id
 package main
 
 import (
@@ -26,12 +27,18 @@ func main() {
 		os.Exit(1)
 	}
 
-	accountId := strconv.FormatInt(whoamiResponse.Data.Account.ID, 10)
+	accountID := strconv.FormatInt(whoamiResponse.Data.Account.ID, 10)
 
-	domainsResponse, err := client.Domains.ListDomains(context.Background(), accountId, nil)
+	fmt.Printf("account id %v\n", accountID)
+
+	name := os.Args[1]
+	transferID, _ := strconv.ParseInt(os.Args[2], 0, 64)
+
+	fmt.Printf("Getting Transfer %v for %v\n", transferID, name)
+	domainTransferResponse, err := client.Registrar.GetDomainTransfer(context.Background(), accountID, name, transferID)
 	if err != nil {
-		fmt.Printf("ListDomains() returned error: %v\n", err)
+		fmt.Printf("GetDomainTransfer() returned error: %v\n", err)
 		os.Exit(1)
 	}
-	fmt.Printf("%+v\n", domainsResponse)
+	fmt.Printf("%+v\n", domainTransferResponse.Data)
 }

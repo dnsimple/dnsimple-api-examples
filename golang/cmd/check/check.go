@@ -20,7 +20,7 @@ func main() {
 	client.BaseURL = "https://api.sandbox.dnsimple.com"
 
 	// get the current authenticated account (if you don't know who you are)
-	whoamiResponse, err := client.Identity.Whoami()
+	whoamiResponse, err := client.Identity.Whoami(context.Background())
 	if err != nil {
 		fmt.Printf("Whoami() returned error: %v\n", err)
 		os.Exit(1)
@@ -35,7 +35,7 @@ func main() {
 
 	domainName := os.Args[1]
 
-	checkDomainResponse, err := client.Registrar.CheckDomain(accountId, domainName)
+	checkDomainResponse, err := client.Registrar.CheckDomain(context.Background(), accountId, domainName)
 	if err != nil {
 		fmt.Printf("CheckDomain() returned error: %v\n", err)
 		os.Exit(1)
