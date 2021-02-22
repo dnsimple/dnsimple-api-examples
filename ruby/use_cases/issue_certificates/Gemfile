@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem 'sinatra', require: false
+gem 'sinatra-contrib', require: false
+gem 'dnsimple', '~> 5.0', require: false
+
+group :development do
+  gem 'pry', require: false
+end

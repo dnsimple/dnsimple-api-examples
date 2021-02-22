@@ -1,0 +1,2 @@
+web: rackup -p 4567
+ngrok: ngrok http 4567 --region=eu --log stdout --log-format term
