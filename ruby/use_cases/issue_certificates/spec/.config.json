@@ -1,0 +1,8 @@
+{
+  "dnsimple": {
+    "api_token": "",
+    "account_id": 1,
+    "contact_id": 1,
+    "api_endpoint": "https://api.sandbox.dnsimple.com"
+  }
+}
