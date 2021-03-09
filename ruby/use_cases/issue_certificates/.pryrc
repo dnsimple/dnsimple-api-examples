@@ -18,7 +18,7 @@ end
 
 def clear_all_webhooks
   App::DnsimpleAdapter.all_webhooks.each do |webhook|
-    next unless /.eu.ngrok.io/.match?(webhook.url)
+    next unless /ngrok\.io/.match?(webhook.url)
 
     App::DnsimpleAdapter.delete_webhook(webhook.id)
   end
