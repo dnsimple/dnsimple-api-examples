@@ -23,7 +23,7 @@ This project is built on top of the [Sinatra](http://www.sinatrarb.com/) web fra
 
 3. Install operational dependencies
    * [`overmind`](https://github.com/DarthSim/overmind)
-   * [ngrok](https://ngrok.com/) tunnel proxy to expose the application to the internet
+   * [ngrok](https://ngrok.com/) tunnel proxy to expose the application to the internet (please make sure `ngrok` executable is in your `PATH`)
 
 4. Add application configuration
    ```bash
