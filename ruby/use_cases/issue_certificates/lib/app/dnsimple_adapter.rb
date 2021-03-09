@@ -25,7 +25,7 @@ module App
 
       # Returns a configured DNSimple API client
       def client
-        Dnsimple::Client.new(
+        ::Dnsimple::Client.new(
           base_url: config[:endpoint],
           access_token: config[:api_token]
         )
@@ -33,6 +33,10 @@ module App
 
       def check_domain(domain)
         client.registrar.check_domain(config[:account_id], domain)
+      end
+
+      def list_all_contacts
+        client.contacts.all_contacts(config[:account_id]).data
       end
 
       def create_contact(contact_details)
