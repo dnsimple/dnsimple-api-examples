@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module App
-  module DnsimpleEvent
+  class DnsimpleEvent
     attr_reader :name, :actor, :account, :api_version,
-                :uuid
+                :uuid, :data
 
     def initialize(payload)
       @payload = payload
@@ -12,7 +12,7 @@ module App
     end
 
     def system_actor?
-      @actor['id'] == 'system'
+      @actor['entity'] == 'dnsimple'
     end
 
     private
