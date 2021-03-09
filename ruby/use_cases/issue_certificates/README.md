@@ -30,6 +30,7 @@ This project is built on top of the [Sinatra](http://www.sinatrarb.com/) web fra
    cp .config.json.example .config.json
    ```
    Enter the information as per the template.
+   To obtain a `contact_id`, after you have entered the API token and account ID, you can open a pry shell `bundle exec pry` and run the following to get all contacts in the account `App::DnsimpleAdapter.list_all_contacts`
 
 5. Start your development server
    ```bash
