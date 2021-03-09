@@ -22,7 +22,7 @@ This project is built on top of the [Sinatra](http://www.sinatrarb.com/) web fra
    ```
 
 3. Install operational dependencies
-   * [`overmind`](https://github.com/DarthSim/overmind) is recommended but you can also use `foreman`
+   * [`overmind`](https://github.com/DarthSim/overmind)
    * [ngrok](https://ngrok.com/) tunnel proxy to expose the application to the internet
 
 4. Add application configuration
@@ -38,6 +38,8 @@ This project is built on top of the [Sinatra](http://www.sinatrarb.com/) web fra
    ```
    This will execute the commands as per the [Procfile](Procfile), launching the app on port `4567`.
    To get the ngrok URL you can visit [http://localhost:4040/status](http://localhost:4040/status), make sure to note down the HTTPS URL. On restarting ngrok you will be allocated a new URL.
+
+   NOTE: On startup a task will run to register the ngrok URL as webhook endpoint. To cleanup after you are done with development you can run `echo 'clear_all_webhooks' | bundle exec pry`, this will delete all webhooks that match the ngrok URL pattern `.eu.ngrok.io`.
 
 
 ## Additional details

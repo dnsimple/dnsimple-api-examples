@@ -64,6 +64,14 @@ module App
         client.webhooks.create_webhook(config[:account_id], { url: url }).data
       end
 
+      def all_webhooks
+        client.webhooks.webhooks(config[:account_id]).data
+      end
+
+      def delete_webhook(webhook_id)
+        client.webhooks.delete_webhook(config[:account_id], webhook_id)
+      end
+
       def certificate(domain_id, certificate_id)
         client.certificates.certificate(config[:account_id], domain_id, certificate_id).data
       end
