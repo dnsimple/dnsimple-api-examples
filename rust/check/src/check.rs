@@ -1,6 +1,6 @@
 use dnsimple::dnsimple::new_client;
 
-pub fn cancel_domain_transfer() {
+pub fn check(token: &str, domain_name: &str) {
     // Construct a client instance
     //
     // If you want to connect to production set the sandbox argument to false
@@ -20,16 +20,7 @@ pub fn cancel_domain_transfer() {
     // Here the account ID is extracted for use in the call to cancel domain transfer.
     let account_id = whoami.account.unwrap().id;
 
-    let domain_name = "thename.com";
-    let transfer_id = 44;
+    let response = client.registrar().check_domain(account_id, domain_name);
 
-    println!(
-        "Cancelling transfer {} for domain {}",
-        transfer_id, domain_name
-    );
-
-    response =
-        client
-            .registrar()
-            .cancel_domain_transfer(account_id, domain_name.into(), transfer_id);
+    println!("{:?}", response.unwrap().data.unwrap());
 }

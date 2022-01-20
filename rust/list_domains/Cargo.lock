@@ -65,7 +65,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "dnsimple-rust-sample-code"
+name = "dnsimple-rust-sample-code-list-domains"
 version = "0.1.0"
 dependencies = [
  "dnsimple",

@@ -1,18 +1,12 @@
-use crate::account_list::account_list;
-use crate::auth::whoami;
-use crate::bad_auth::bad_auth;
+use crate::list_zone_records::list_zone_records;
 use std::fs;
 
-mod account_list;
-mod auth;
-mod bad_auth;
-mod cancel_domain_transfer;
+mod list_zone_records;
 
 fn main() {
     let token = token_from_file();
-    account_list(&token);
-    whoami(&token);
-    bad_auth();
+
+    list_zone_records(&*token);
 }
 
 fn token_from_file() -> String {

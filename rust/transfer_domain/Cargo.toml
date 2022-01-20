@@ -1,5 +1,5 @@
 [package]
-name = "dnsimple-rust-sample-code"
+name = "dnsimple-rust-sample-code-transfer-domain"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 dnsimple = "0.1.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["raw_value"] }
