@@ -6,7 +6,7 @@ fn main() {
     whoami(&token);
 }
 
-pub fn whoami(token: &String) {
+pub fn whoami(token: &str) {
     // Construct a client instance
     //
     // If you want to connect to production set the sandbox argument to false

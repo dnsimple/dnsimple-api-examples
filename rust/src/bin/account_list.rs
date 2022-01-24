@@ -6,7 +6,7 @@ fn main() {
     account_list(&token);
 }
 
-pub fn account_list(token: &String) {
+pub fn account_list(token: &str) {
     // Construct a client instance
     //
     // If you want to connect to production set the sandbox argument to false

@@ -7,6 +7,5 @@ pub fn token_from_file() -> String {
         .unwrap();
     let len = token.len();
     token.truncate(len - 1);
-    println!("Using {} as your current token", token);
     token
 }
