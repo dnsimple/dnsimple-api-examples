@@ -55,9 +55,9 @@ dependencies = [
 
 [[package]]
 name = "dnsimple"
-version = "0.1.2"
+version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec2eae8524dd3f0ff66ef7eed4638e0345e61b6f3c42539afad0be7b713c0f98"
+checksum = "d2941bd5e0406eca3512169aabf52062395bf9f9df8fe498babe93a6f334ea7f"
 dependencies = [
  "serde",
  "serde_json",
