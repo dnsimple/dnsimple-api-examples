@@ -16,7 +16,6 @@ module App
     post '/issue_certificate' do
       certificate_order = App::DnsimpleAdapter.purchase_letsencrypt_certificate(
         parsed_request_body['domain'],
-        App.config.dnsimple['contact_id'],
         name: parsed_request_body['name'],
         alternate_names: parsed_request_body['san']&.split(','),
         auto_renew: parsed_request_body.fetch('auto_renew', true)

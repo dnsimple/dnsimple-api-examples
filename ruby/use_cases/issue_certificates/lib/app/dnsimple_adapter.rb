@@ -84,9 +84,8 @@ module App
         client.certificates.certificate_private_key(config[:account_id], domain_id, certificate_id).data
       end
 
-      def purchase_letsencrypt_certificate(domain_id, contact_id, name: 'www', alternate_names: nil, auto_renew: false)
+      def purchase_letsencrypt_certificate(domain_id, name: 'www', alternate_names: nil, auto_renew: false)
         attributes = {
-          contact_id: contact_id,
           name: name,
           alternate_names: alternate_names,
           auto_renew: auto_renew
