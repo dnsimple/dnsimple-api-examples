@@ -28,7 +28,15 @@ pub fn check(token: &str, domain_name: &str) {
     // Here the account ID is extracted for use in the call to cancel domain transfer.
     let account_id = whoami.account.unwrap().id;
 
-    let response = client.registrar().check_domain(account_id, domain_name);
+    let response = client
+        .registrar()
+        .check_domain(account_id, domain_name)
+        .unwrap()
+        .data
+        .unwrap();
 
-    println!("{:?}", response.unwrap().data.unwrap());
+    println!(
+        "Domain: {}\nAvailable: {}\nPremium: {}",
+        response.domain, response.available, response.premium
+    );
 }

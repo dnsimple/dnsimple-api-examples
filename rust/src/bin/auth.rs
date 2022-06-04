@@ -22,5 +22,10 @@ pub fn whoami(token: &str) {
     // Note:
     //      The `user` property will be `None` if an account token was supplied
     //      The `account` property will be `None` if a user token was supplied
-    println!("Your account data: {:?}", whoami)
+
+    let account = whoami.account.unwrap();
+    println!(
+        "Account ID: {}\nAccount Email: {}\nPlan: {}",
+        account.id, account.email, account.plan_identifier
+    );
 }

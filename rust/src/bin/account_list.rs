@@ -17,7 +17,11 @@ pub fn account_list(token: &str) {
     //
     // `client.accounts().list_accounts` is the method for retrieving the list of accounts for your
     // current credentials via the DNSimple API.
-    let response = client.accounts().list_accounts().unwrap().data;
+    let response = client.accounts().list_accounts().unwrap().data.unwrap();
+    let account = response.first().unwrap();
 
-    println!("{:?}", response);
+    println!(
+        "Account ID: {}\nAccount Email: {}\nPlan: {}",
+        account.id, account.email, account.plan_identifier
+    );
 }

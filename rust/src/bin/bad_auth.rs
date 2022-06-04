@@ -20,5 +20,6 @@ pub fn bad_auth() {
     // current credentials via the DNSimple API.
     let response = client.identity().whoami();
 
-    println!("The server replied with: {:?}", response)
+    let error = response.unwrap_err();
+    println!("The server replied with: {}", error);
 }
