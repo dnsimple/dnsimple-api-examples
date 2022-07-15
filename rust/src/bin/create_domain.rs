@@ -34,5 +34,19 @@ pub fn create_domain(token: &str, domain_name: &str) {
         .domains()
         .create_domain(account_id, domain_name.to_string());
 
-    println!("{:?}", response.unwrap().data.unwrap());
+    if let Err(e) = response {
+        println!("Error creating domain: {}", e);
+        return;
+    }
+
+    let new_domain = response.unwrap().data;
+
+    match new_domain {
+        None => {
+            println!("No domain returned!")
+        }
+        Some(d) => {
+            println!("Name: {}\nState: {}", d.name, d.state)
+        }
+    }
 }

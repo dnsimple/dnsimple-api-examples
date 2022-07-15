@@ -33,5 +33,19 @@ pub fn create_contact(token: &str, data: &str) {
 
     let response = client.contacts().create_contact(account_id, contact);
 
-    println!("{:?}", response.unwrap().data.unwrap());
+    if let Err(e) = response {
+        println!("Contact create had error: {}", e);
+        return;
+    }
+
+    let new_contact = response.unwrap().data;
+
+    match new_contact {
+        None => {
+            println!("No contact created?")
+        }
+        Some(r) => {
+            println!("Contact ID: {}\n Email: {}", r.id, r.email)
+        }
+    }
 }
