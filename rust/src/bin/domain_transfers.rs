@@ -43,5 +43,14 @@ pub fn get_domain_transfer(token: &str, domain_name: &str, transfer_id: u64) {
             .registrar()
             .get_domain_transfer(account_id, domain_name.to_string(), transfer_id);
 
-    println!("{:?}", response.unwrap().data.unwrap());
+    match response {
+        Ok(r) => {
+            let transfer = r.data.unwrap();
+            println!("State: {}", transfer.state);
+            println!("Status: {}", transfer.status_description.unwrap())
+        }
+        Err(e) => {
+            println!("Transfer request had error: {}", e)
+        }
+    }
 }
