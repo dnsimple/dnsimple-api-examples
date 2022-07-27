@@ -1,6 +1,8 @@
 use std::fs;
 
 pub fn token_from_file() -> String {
-    let token: String = fs::read_to_string("./token.txt").unwrap();
-    token.trim().to_string()
+    match fs::read_to_string("./token.txt") {
+        Ok(i) => i.trim().to_string(),
+        Err(e) => panic!("Could not read token from ./token.txt: {e}"),
+    }
 }
