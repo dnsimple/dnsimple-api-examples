@@ -44,7 +44,7 @@ func main() {
 
 	contact := contacts.Data[0]
 
-	registerDomainResponse, err := client.Registrar.RegisterDomain(context.Background(), accountId, domainName, &dnsimple.DomainRegisterRequest{RegistrantID: contact.ID})
+	registerDomainResponse, err := client.Registrar.RegisterDomain(context.Background(), accountId, domainName, &dnsimple.RegisterDomainInput{RegistrantID: int(contact.ID)})
 	if err != nil {
 		fmt.Printf("RegisterDomain() returned error: %v\n", err)
 		os.Exit(1)
