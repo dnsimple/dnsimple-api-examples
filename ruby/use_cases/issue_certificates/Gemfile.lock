@@ -19,7 +19,7 @@ GEM
     pry (0.14.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    rack (2.2.3)
+    rack (2.2.6.3)
     rack-protection (2.1.0)
       rack
     rack-test (1.1.0)
@@ -53,6 +53,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-19
+  x86_64-linux
 
 DEPENDENCIES
   dnsimple (~> 5.0)
