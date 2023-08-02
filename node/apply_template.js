@@ -8,23 +8,22 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
   });
 
   try {
-    let identity = await dnsimple.identity.whoami();
-    const accountID = identity.data.account.id;
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
     const domainName = process.env.DOMAIN;
-    const templateID = process.env.templateID;
+    const templateId = process.env.templateID;
 
     if (!domainName) {
       console.error('Please specify a domain name to register');
       return;
     }
 
-    if (!templateID) {
+    if (!templateId) {
       console.error('Please specify a template ID to register the domain with');
       return;
     }
 
-    const response = await dnsimple.templates.applyTemplate(accountID, domainName, templateID);
-
+    const response = await dnsimple.templates.applyTemplate(accountId, domainName, templateId);
     console.log(response);
   } catch (err) {
     if (err instanceof AuthenticationError) {

@@ -8,24 +8,23 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
   });
 
   try {
-    let identity = await dnsimple.identity.whoami();
-    const accountID = identity.data.account.id;
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
     const domainName = process.env.DOMAIN;
-    const contactID = process.env.CONTACT_ID;
+    const contactId = process.env.CONTACT_ID;
 
     if (!domainName) {
       console.error('Please specify a domain name to register');
       return;
     }
 
-    if (!contactID) {
+    if (!contactId) {
       console.error('Please specify a contact ID to register the domain with');
       return;
     }
 
-    const registrationAttributes = { registrant_id: contactID, auto_renew: true };
-    const registration = await dnsimple.registrar.registerDomain(accountID, domainName, registrationAttributes);
-
+    const registrationAttributes = { registrant_id: contactId, auto_renew: true };
+    const registration = await dnsimple.registrar.registerDomain(accountId, domainName, registrationAttributes);
     console.log(registration);
   } catch (err) {
     if (err instanceof AuthenticationError) {

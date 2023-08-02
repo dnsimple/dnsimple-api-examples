@@ -1,20 +1,27 @@
-'use strict';
+const { DNSimple, AuthenticationError } = require('dnsimple');
 
-// Usage: TOKEN=token node domain_transfers.js example.com 42
-// where 42 is the domain transfer id
+(async () => {
+  const dnsimple = new DNSimple({
+    baseUrl: 'https://api.sandbox.dnsimple.com',
+    accessToken: process.env.TOKEN,
+    userAgent: 'dnsimple-examples',
+  });
 
-var client = require('dnsimple')({
-  baseUrl: 'https://api.sandbox.dnsimple.com',
-  accessToken: process.env.TOKEN,
-});
+  // Provide the domain name (e.g. example.com) as the first CLI argument...
+  const name = process.argv[2];
+  // ...and the transfer ID (e.g. 42) as the second CLI argument.
+  const transferId = process.argv[3];
 
-client.identity.whoami().then(function (response) {
-  let name = process.argv[2];
-  let transferId = process.argv[3];
-  console.log(`Getting transfer ${transferId} for domain ${name}`);
-  return client.registrar.getDomainTransfer(response.data.account.id, name, transferId);
-}).then(function (response) {
-  console.log(response);
-}, function (error) {
-  console.log(error);
-});
+  try {
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
+    const transfer = await dnsimple.registrar.getDomainTransfer(accountId, name, transferId);
+    console.log(transfer);
+  } catch (err) {
+    if (err instanceof AuthenticationError) {
+      console.error('Authentication error. Check your token is correct for the sandbox environment.');
+    } else {
+      console.error(err);
+    }
+  }
+})();

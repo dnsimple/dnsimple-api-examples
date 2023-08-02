@@ -8,8 +8,8 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
   });
 
   try {
-    let identity = await dnsimple.identity.whoami();
-    const accountID = identity.data.account.id;
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
 
     const contactDetails = {
       label: 'Alice Appleseed (US)',
@@ -24,8 +24,7 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
       phone: '+1 321 555 4444',
     };
 
-    const contact = await dnsimple.contacts.createContact(accountID, contactDetails);
-
+    const contact = await dnsimple.contacts.createContact(accountId, contactDetails);
     console.log(contact);
   } catch (err) {
     if (err instanceof AuthenticationError) {

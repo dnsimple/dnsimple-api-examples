@@ -8,18 +8,17 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
   });
 
   try {
-    let identity = await dnsimple.identity.whoami();
-    const accountID = identity.data.account.id;
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
 
     let domainCount = 0;
-    for await (const domains of dnsimple.domains.listDomains.iterateAll(accountID, { sort: 'id:asc', per_page: 4 })) {
+    for await (const domains of dnsimple.domains.listDomains.iterateAll(accountId, { sort: 'id:asc', per_page: 4 })) {
       console.log(domains);
 
-      // Print only the first 4 domains
-      if (domainCount >= 3) {
+      // Print only the first 4 domains.
+      if (++domainCount == 4) {
         break;
       }
-      domainCount++;
     }
   } catch (err) {
     if (err instanceof AuthenticationError) {

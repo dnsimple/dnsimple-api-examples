@@ -16,7 +16,10 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
     } else {
       console.error(err);
     }
+    return;
   }
 
-  identity && console.log(identity);
+  if (identity) {
+    console.log(identity);
+  }
 })();

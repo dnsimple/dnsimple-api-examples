@@ -8,8 +8,8 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
   });
 
   try {
-    let identity = await dnsimple.identity.whoami();
-    const accountID = identity.data.account.id;
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
     const domainName = process.env.DOMAIN;
 
     if (!domainName) {
@@ -17,8 +17,7 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
       return;
     }
 
-    const domain = await dnsimple.domains.createDomain(accountID, { name: domainName });
-
+    const domain = await dnsimple.domains.createDomain(accountId, { name: domainName });
     console.log(domain);
   } catch (err) {
     if (err instanceof AuthenticationError) {

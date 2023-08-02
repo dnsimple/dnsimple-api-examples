@@ -8,13 +8,12 @@ const { DNSimple, AuthenticationError } = require('dnsimple');
   });
 
   try {
-    let identity = await dnsimple.identity.whoami();
-    const accountID = identity.data.account.id;
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
     const zoneName = process.env.DOMAIN || 'dns.com';
 
     // List all of the records for a zone
-    const zoneRecords = await dnsimple.zones.listZoneRecords.collectAll(accountID, zoneName);
-
+    const zoneRecords = await dnsimple.zones.listZoneRecords.collectAll(accountId, zoneName);
     console.log(zoneRecords);
   } catch (err) {
     if (err instanceof AuthenticationError) {
