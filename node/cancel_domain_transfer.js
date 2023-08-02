@@ -1,20 +1,35 @@
-'use strict';
+const { DNSimple, AuthenticationError } = require('dnsimple');
 
-// Usage: TOKEN=token node cancel_domain_transfer.js example.com 42
-// where 42 is the domain transfer id
+(async () => {
+  const dnsimple = new DNSimple({
+    baseUrl: 'https://api.sandbox.dnsimple.com',
+    accessToken: process.env.TOKEN,
+    userAgent: 'dnsimple-examples',
+  });
 
-var client = require('dnsimple')({
-  baseUrl: 'https://api.sandbox.dnsimple.com',
-  accessToken: process.env.TOKEN,
-});
+  try {
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
+    const domainName = process.env.DOMAIN;
+    const transferId = process.env.TRANSFER_ID;
 
-client.identity.whoami().then(function (response) {
-  let name = process.argv[2];
-  let transferId = process.argv[3]
-  console.log(`Cancelling transfer ${transferId} for domain ${name}`);
-  return client.registrar.cancelDomainTransfer(response.data.account.id, name, transferId);
-}).then(function (response) {
-  console.log(response);
-}, function (error) {
-  console.log(error);
-});
+    if (!domainName) {
+      console.error('Please specify a domain name to register');
+      return;
+    }
+
+    if (!transferId) {
+      console.error('Please specify a transfer ID to cancel the transfer with');
+      return;
+    }
+
+    const transfer = await dnsimple.registrar.cancelDomainTransfer(accountId, domainName, transferId);
+    console.log(transfer);
+  } catch (err) {
+    if (err instanceof AuthenticationError) {
+      console.error('Authentication error. Check your token is correct for the sandbox environment.');
+    } else {
+      console.error(err);
+    }
+  }
+})();

@@ -1,18 +1,25 @@
-'use strict';
+const { DNSimple, AuthenticationError } = require('dnsimple');
 
-// Usage: TOKEN=token node zone_records.js example.com
+(async () => {
+  const dnsimple = new DNSimple({
+    baseUrl: 'https://api.sandbox.dnsimple.com',
+    accessToken: process.env.TOKEN,
+    userAgent: 'dnsimple-examples',
+  });
 
-var client = require('dnsimple')({
-  baseUrl: 'https://api.sandbox.dnsimple.com',
-  accessToken: process.env.TOKEN,
-});
+  try {
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
+    const zoneName = process.env.DOMAIN || 'dns.com';
 
-client.identity.whoami().then(function(response) {
-  let name = process.argv[2];
-  return client.zones.listZoneRecords(response.data.account.id, name);
-}).then(function(response) {
-  console.log(response);
-}, function(error) {
-  console.log(error);
-});
-
+    // List all of the records for a zone
+    const zoneRecords = await dnsimple.zones.listZoneRecords.collectAll(accountId, zoneName);
+    console.log(zoneRecords);
+  } catch (err) {
+    if (err instanceof AuthenticationError) {
+      console.error('Authentication error. Check your token is correct for the sandbox environment.');
+    } else {
+      console.error(err);
+    }
+  }
+})();

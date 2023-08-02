@@ -1,20 +1,36 @@
-'use strict';
+const { DNSimple, AuthenticationError } = require('dnsimple');
 
-// Usage: TOKEN=token CONTACT_ID=1 node register_domain.js example.com
+(async () => {
+  const dnsimple = new DNSimple({
+    baseUrl: 'https://api.sandbox.dnsimple.com',
+    accessToken: process.env.TOKEN,
+    userAgent: 'dnsimple-examples',
+  });
 
-var client = require('dnsimple')({
-  baseUrl: 'https://api.sandbox.dnsimple.com',
-  accessToken: process.env.TOKEN,
-});
+  try {
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
+    const domainName = process.env.DOMAIN;
+    const contactId = process.env.CONTACT_ID;
 
-client.identity.whoami().then(function(response) {
-  let name = process.argv[2];
-  let attributes = { registrant_id: process.env.CONTACT_ID, auto_renew: true }
+    if (!domainName) {
+      console.error('Please specify a domain name to register');
+      return;
+    }
 
-  console.log(`Registering domain ${name}`);
-  return client.registrar.registerDomain(response.data.account.id, name, attributes);
-}).then(function(response) {
-  console.log(response);
-}, function(error) {
-  console.log(error);
-});
+    if (!contactId) {
+      console.error('Please specify a contact ID to register the domain with');
+      return;
+    }
+
+    const registrationAttributes = { registrant_id: contactId, auto_renew: true };
+    const registration = await dnsimple.registrar.registerDomain(accountId, domainName, registrationAttributes);
+    console.log(registration);
+  } catch (err) {
+    if (err instanceof AuthenticationError) {
+      console.error('Authentication error. Check your token is correct for the sandbox environment.');
+    } else {
+      console.error(err);
+    }
+  }
+})();

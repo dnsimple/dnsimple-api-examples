@@ -1,22 +1,35 @@
-'use strict';
+const { DNSimple, AuthenticationError } = require('dnsimple');
 
-// Usage: TOKEN=token node apply_template.js example.com template
-//
-// The template value may be either the template short name or the template numeric ID
+(async () => {
+  const dnsimple = new DNSimple({
+    baseUrl: 'https://api.sandbox.dnsimple.com',
+    accessToken: process.env.TOKEN,
+    userAgent: 'dnsimple-examples',
+  });
 
-var client = require('dnsimple')({
-  baseUrl: 'https://api.sandbox.dnsimple.com',
-  accessToken: process.env.TOKEN,
-});
+  try {
+    const identity = await dnsimple.identity.whoami();
+    const accountId = identity.data.account.id;
+    const domainName = process.env.DOMAIN;
+    const templateId = process.env.templateID;
 
-client.identity.whoami().then(function(response) {
-  let name = process.argv[2];
-  let templateId = process.argv[3];
-  return client.templates.applyTemplate(response.data.account.id, templateId, name);
-}).then(function(response) {
-  console.log(response);
-}, function(error) {
-  console.log(error);
-});
+    if (!domainName) {
+      console.error('Please specify a domain name to register');
+      return;
+    }
 
+    if (!templateId) {
+      console.error('Please specify a template ID to register the domain with');
+      return;
+    }
 
+    const response = await dnsimple.templates.applyTemplate(accountId, domainName, templateId);
+    console.log(response);
+  } catch (err) {
+    if (err instanceof AuthenticationError) {
+      console.error('Authentication error. Check your token is correct for the sandbox environment.');
+    } else {
+      console.error(err);
+    }
+  }
+})();
