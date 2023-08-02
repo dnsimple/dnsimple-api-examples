@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# Usage: ENV["CERTIFICATE_DOMAIN_ID"]=example.com ENV["CERTIFICATE_CONTACT_ID"]=1 ruby ./request_letsencrypt_certificate.rb
+# Usage: ENV["CERTIFICATE_DOMAIN_ID"]=example.com ruby ./request_letsencrypt_certificate.rb
 
 require 'pp'
 require 'dnsimple'
@@ -8,8 +8,6 @@ require_relative 'token'
 
 ENV["CERTIFICATE_DOMAIN_ID"] or
     abort("set CERTIFICATE_DOMAIN_ID to the ID of the domain to request the certificate for")
-ENV["CERTIFICATE_CONTACT_ID"] or
-    abort("set CERTIFICATE_CONTACT_ID to the ID of the contact to use for the certificate")
 
 # Construct a client instance.
 #
@@ -30,7 +28,7 @@ response = client.identity.whoami
 account_id = response.data.account.id
 
 # Dnsimple::Client::Certificates#purchase_letsencrypt_certificate is the method to create a certificate order.
-response = client.certificates.purchase_letsencrypt_certificate(account_id, ENV["CERTIFICATE_DOMAIN_ID"], { contact_id: ENV["CERTIFICATE_CONTACT_ID"], name: ENV["CERTIFICATE_NAME"] || "www" })
+response = client.certificates.purchase_letsencrypt_certificate(account_id, ENV["CERTIFICATE_DOMAIN_ID"], { name: ENV["CERTIFICATE_NAME"] || "www" })
 
 # Pretty-print the entire response object so you can see what is inside.
 pp response
