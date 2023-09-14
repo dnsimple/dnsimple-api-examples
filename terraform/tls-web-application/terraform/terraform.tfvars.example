@@ -1,0 +1,3 @@
+dnsimple_account = "123456"
+dnsimple_token = "apitoken"
+dnsimple_domain = "example.com"
