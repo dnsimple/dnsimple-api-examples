@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNSimple DNS Demo App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    #emails {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #emails tbody tr {
+      cursor: pointer;
+    }
+
+    #emails tbody tr:hover {
+      background: #fafafa;
+    }
+
+    #emails th, #emails td {
+      border: 1px solid #eee;
+      padding: 0.5rem;
+    }
+
+    #emails th {
+      text-align: left;
+    }
+
+    #content {
+      margin-top: 1rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <h1>DNSimple DNS Demo App</h1>
+  <table id="emails">
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Date</th>
+        <th>Subject</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template id="t-email">
+        <tr>
+          <td class="from"></td>
+          <td class="to"></td>
+          <td class="date"></td>
+          <td class="subject"></td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+  <article id="content">
+  </article>
+  <script>
+    (async () => {
+      const partition = (s, d) => {
+        const pos = s.indexOf(d);
+        return pos == -1 ? [s] : [s.slice(0, pos), s.slice(pos + d.length)];
+      };
+      const $ = s => document.querySelector(s);
+      const $emails = $("#emails tbody");
+      const $tEmail = $("#t-email");
+      const $content = $("#content");
+      const {emails} = await fetch(`http://api.${location.hostname}`).then(r => r.json());
+      const processRawEmail = (id, raw) => {
+        const [headersRaw, bodyRaw] = partition(raw, "\r\n\r\n");
+        const headers = Object.fromEntries(headersRaw.split("\r\n").map(l => partition(l, ": ")));
+        const contentType = headers["Content-Type"];
+        const $email = $tEmail.content.cloneNode(true).querySelector("tr");
+        $emails.append($email);
+        $email.addEventListener("click", e => {
+          if (!contentType?.includes("multipart/")) {
+            return $content.textContent = bodyRaw;
+          }
+          const boundary = /boundary="([^"]+)"/.exec(contentType)[1];
+          const formats = bodyRaw.split(`--${boundary}`).map(f => f.trim()).filter(f => f);
+          for (const f of formats) {
+            // The raw body ends with `--${boundary}--`.
+            if (f === "--") continue;
+            const [fHeadersRaw, fBodyRaw] = partition(f, "\r\n\r\n");
+            const fHeaders = Object.fromEntries(fHeadersRaw.split("\r\n").map(l => partition(l, ": ")));
+            if (!fHeaders["Content-Type"]?.includes("text/plain")) continue;
+            return $content.textContent = fBodyRaw;
+          }
+        }, true);
+        $email.querySelector(".from").textContent = headers["From"];
+        $email.querySelector(".to").textContent = headers["To"];
+        $email.querySelector(".date").textContent = headers["Date"];
+        $email.querySelector(".subject").textContent = headers["Subject"];
+      };
+      for (const { Id: id, Data: raw } of emails) {
+        try {
+          processRawEmail(id, raw);
+        } catch (err) {
+          console.warn("Failed to parse", id, "with error:", err);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
