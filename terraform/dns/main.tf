@@ -196,7 +196,7 @@ resource "dnsimple_zone_record" "api_virginia_record" {
 #   user_data = <<-EOT
 #     #!/bin/bash
 #     python3 -m ensurepip
-#     pip3 install boto3 Flask
+#     pip3 install boto3 Flask flask-cors
 #     python3 << 'EndOfPython'
 #     ${templatefile("api.py", { domain = var.domain })}
 #     EndOfPython
@@ -209,7 +209,7 @@ resource "dnsimple_zone_record" "api_virginia_record" {
 #   name      = "api"
 #   type      = "A"
 #   ttl       = 600
-#   value     = aws_instance.api-virginia.public_ip
+#   value     = aws_instance.api-sydney.public_ip
 #   regions   = ["SYD"]
 # }
 
