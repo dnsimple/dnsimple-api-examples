@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "5.17.0"
     }
 
     dnsimple = {
-      source = "dnsimple/dnsimple"
+      source  = "dnsimple/dnsimple"
       version = "1.2.0"
     }
   }
@@ -17,7 +17,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "aws-sydney"
+  alias  = "aws-sydney"
   region = "ap-southeast-2"
 }
 
@@ -46,7 +46,7 @@ resource "dnsimple_zone_record" "verification_record" {
 
 // Now that the record has been set, we'll ask SES to verify and domain and wait for its confirmation. This may take a few minutes...
 resource "aws_ses_domain_identity_verification" "domain" {
-  domain = aws_ses_domain_identity.domain.id
+  domain     = aws_ses_domain_identity.domain.id
   depends_on = [dnsimple_zone_record.verification_record]
 }
 
@@ -59,16 +59,16 @@ resource "aws_s3_bucket" "emails" {
 resource "aws_s3_bucket_policy" "emails" {
   bucket = aws_s3_bucket.emails.id
   policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Sid": "AllowSESPuts",
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "ses.amazonaws.com"
+        "Sid" : "AllowSESPuts",
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "ses.amazonaws.com"
         },
-        "Action": "s3:PutObject",
-        "Resource": "arn:aws:s3:::${var.domain}-emails/*",
+        "Action" : "s3:PutObject",
+        "Resource" : "arn:aws:s3:::${var.domain}-emails/*",
       }
     ]
   })
@@ -81,14 +81,14 @@ resource "aws_ses_receipt_rule_set" "main" {
 
 // We only need one rule in our rule set: store incoming emails to our S3 bucket.
 resource "aws_ses_receipt_rule" "main" {
-  depends_on = [aws_ses_active_receipt_rule_set.main, aws_s3_bucket_policy.emails]
+  depends_on    = [aws_ses_active_receipt_rule_set.main, aws_s3_bucket_policy.emails]
   name          = "main"
   rule_set_name = "main"
   enabled       = true
   s3_action {
     bucket_name = "${var.domain}-emails"
     // If you have more than one action, you can decide the order they're applied in by changing this attribute.
-    position    = 1
+    position = 1
   }
 }
 
@@ -162,11 +162,11 @@ resource "aws_iam_instance_profile" "api" {
 // Also, if you'd like to set up SSH access, make sure to provide `key_name`.
 resource "aws_instance" "api-virginia" {
   // As of 2023-09-18, this is the AMI ID for Amazon Linux 2013 (x86) in us-east-1.
-  ami = "ami-04cb4ca688797756f"
+  ami                         = "ami-04cb4ca688797756f"
   associate_public_ip_address = true
-  instance_type = "t3a.micro"
-  iam_instance_profile = aws_iam_instance_profile.api.name
-  user_data = <<-EOT
+  instance_type               = "t3a.micro"
+  iam_instance_profile        = aws_iam_instance_profile.api.name
+  user_data                   = <<-EOT
     #!/bin/bash
     python3 -m ensurepip
     pip3 install boto3 Flask flask-cors
@@ -222,8 +222,8 @@ resource "aws_s3_bucket" "app" {
 
 // Unblock public access, so anyone can reach our app.
 resource "aws_s3_bucket_public_access_block" "app" {
-  bucket = aws_s3_bucket.app.bucket
-  block_public_policy = false
+  bucket                  = aws_s3_bucket.app.bucket
+  block_public_policy     = false
   restrict_public_buckets = false
 }
 
@@ -232,18 +232,18 @@ resource "aws_s3_bucket_public_access_block" "app" {
 resource "aws_s3_bucket_policy" "app" {
   // We must wait for `block_public_policy` to be disabled.
   depends_on = [aws_s3_bucket_public_access_block.app]
-  bucket = aws_s3_bucket.app.bucket
+  bucket     = aws_s3_bucket.app.bucket
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Sid": "PublicReadGetObject",
-        "Effect": "Allow",
-        "Principal": "*",
-        "Action": [
+        "Sid" : "PublicReadGetObject",
+        "Effect" : "Allow",
+        "Principal" : "*",
+        "Action" : [
           "s3:GetObject"
         ],
-        "Resource": [
+        "Resource" : [
           "arn:aws:s3:::${var.domain}/*"
         ]
       }
@@ -261,11 +261,11 @@ resource "aws_s3_bucket_website_configuration" "app" {
 
 // Upload our app to the bucket.
 resource "aws_s3_object" "object" {
-  bucket = aws_s3_bucket.app.bucket
-  key = "index.html"
-  source = "app.html"
+  bucket       = aws_s3_bucket.app.bucket
+  key          = "index.html"
+  source       = "app.html"
   content_type = "text/html"
-  etag = filemd5("app.html")
+  etag         = filemd5("app.html")
 }
 
 // We want users to be able to reach our app via our domain directly for user friendliness (e.g. myapp.com, not www.myapp.com or myapp.com.s3-website-us-east-1.amazonaws.com). However, S3 requires us to point our domain to an *.amazonaws.com domain in order to use the website feature, which means a CNAME record, but that's not allowed at the root by the DNS standard. Therefore, we can take advantage of a DNSimple feature called ALIAS records, which you can read more about at https://support.dnsimple.com/articles/alias-record. We can use these with the Terraform provider.
