@@ -61,3 +61,9 @@ terraform destroy
 ```
 
 You may need to empty your emails S3 bucket first. You can follow this [guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/empty-bucket.html) for more details.
+
+## Notes
+
+As this is a demo, for simplicity reasons, there is no HTTPS set up for the API or the app. Use this demo for fun, not for private or sensitive information.
+
+An interesting exercise is to add HTTPS. You may find our [Terraform TLS Web Application demo](../tls-web-application) helpful in this regard.
