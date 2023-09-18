@@ -51,3 +51,13 @@ terraform apply
 ```
 
 You can also run the demo incrementally, at your pace, by commenting out all code in [main.tf](./main.tf) after the point where you'd like to stop, and then running the above `terraform apply` command. Once you're happy to proceed, uncomment out some more code, and then repeat.
+
+## Cleaning up
+
+You can destroy all resources created by this demo by running:
+
+```bash
+terraform destroy
+```
+
+You may need to empty your emails S3 bucket first.

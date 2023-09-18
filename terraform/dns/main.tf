@@ -81,9 +81,9 @@ resource "aws_ses_receipt_rule_set" "main" {
 
 // We only need one rule in our rule set: store incoming emails to our S3 bucket.
 resource "aws_ses_receipt_rule" "main" {
-  depends_on    = [aws_ses_active_receipt_rule_set.main, aws_s3_bucket_policy.emails]
+  depends_on    = [aws_s3_bucket_policy.emails]
   name          = "main"
-  rule_set_name = "main"
+  rule_set_name = aws_ses_receipt_rule_set.main.rule_set_name
   enabled       = true
   s3_action {
     bucket_name = "${var.domain}-emails"
@@ -94,7 +94,7 @@ resource "aws_ses_receipt_rule" "main" {
 
 // Now that we have set up our rule set with all the rules we need, make the rule set active.
 resource "aws_ses_active_receipt_rule_set" "main" {
-  rule_set_name = "main"
+  rule_set_name = aws_ses_receipt_rule_set.main.rule_set_name
 }
 
 // The last thing to do is to set up the MX record for our domain.
