@@ -67,3 +67,11 @@ You may need to empty your emails S3 bucket first. You can follow this [guide](h
 As this is a demo, for simplicity reasons, there is no HTTPS set up for the API or the app. Use this demo for fun, not for private or sensitive information.
 
 An interesting exercise is to add HTTPS. You may find our [Terraform TLS Web Application demo](../tls-web-application) helpful in this regard.
+
+## See also
+
+- [DNSimple API](https://developer.dnsimple.com/v2/)
+- [DNSimple Terraform Provider support article](https://support.dnsimple.com/articles/terraform-provider/)
+- [DNSimple Terraform Provider reference](https://registry.terraform.io/providers/dnsimple/dnsimple/latest/docs)
+- [DNSimple Terraform Provider announcement](https://blog.dnsimple.com/2021/12/introducing-dnsimple-terraform-provider/)
+- [DNSimple Supported DNS Record Types](https://support.dnsimple.com/articles/supported-dns-records/)
