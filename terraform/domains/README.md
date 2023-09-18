@@ -40,6 +40,14 @@ Now, you're ready to apply the Terraform resources. This will begin the process 
 terraform apply
 ```
 
+Once the domains have been registered, you can experiment with the resources. Some things you could try:
+
+- Adding a new domain to `domains.json`.
+- Changing the `whois_privacy_enabled` attribute for all domains, and seeing if these are reflected when you do a [WHOIS lookup](https://dnsimple.com/whois).
+- Updating the contact, and then doing a [WHOIS lookup](https://dnsimple.com/whois).
+- Extending `domains.json` from an array of strings to an object, to represent different configuration for different domains. This will require some additional code in `main.tf` too.
+- Setting up a [URL record](https://support.dnsimple.com/articles/url-record/) for all typosquatting to redirect to the official domain. You may find our [DNS demo](../dns) helpful.
+
 ## Notes
 
 Your domains aren't deleted when you destroy the Terraform resources, for safety reasons. This means that those domains will remain registered to you even after you complete this demo and clean up the Terraform resources.
