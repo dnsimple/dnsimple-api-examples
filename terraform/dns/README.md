@@ -60,4 +60,4 @@ You can destroy all resources created by this demo by running:
 terraform destroy
 ```
 
-You may need to empty your emails S3 bucket first.
+You may need to empty your emails S3 bucket first. You can follow this [guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/empty-bucket.html) for more details.
