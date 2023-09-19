@@ -7,7 +7,7 @@ terraform {
 
     dnsimple = {
       source  = "dnsimple/dnsimple"
-      version = "1.2.0"
+      version = "1.2.1"
     }
   }
 }
@@ -186,32 +186,32 @@ resource "dnsimple_zone_record" "api_virginia_record" {
 }
 
 // To demonstrate regional records, we'll spin up a replica API server in Sydney. It runs the same API server and will serve identical data, but will provide a lower latency experience for users in Australia.
-# resource "aws_instance" "api-sydney" {
-#   provider = aws.aws-sydney
-#   // As of 2023-09-18, this is the AMI ID for Amazon Linux 2013 (x86) in ap-southeast-2.
-#   ami = "ami-0dfb78957e4edea0c"
-#   associate_public_ip_address = true
-#   instance_type = "t3a.micro"
-#   iam_instance_profile = aws_iam_instance_profile.api.name
-#   user_data = <<-EOT
-#     #!/bin/bash
-#     python3 -m ensurepip
-#     pip3 install boto3 Flask flask-cors
-#     python3 << 'EndOfPython'
-#     ${templatefile("api.py", { domain = var.domain })}
-#     EndOfPython
-#   EOT
-# }
+resource "aws_instance" "api-sydney" {
+  provider = aws.aws-sydney
+  // As of 2023-09-18, this is the AMI ID for Amazon Linux 2013 (x86) in ap-southeast-2.
+  ami                         = "ami-0dfb78957e4edea0c"
+  associate_public_ip_address = true
+  instance_type               = "t3a.micro"
+  iam_instance_profile        = aws_iam_instance_profile.api.name
+  user_data                   = <<-EOT
+    #!/bin/bash
+    python3 -m ensurepip
+    pip3 install boto3 Flask flask-cors
+    python3 << 'EndOfPython'
+    ${templatefile("api.py", { domain = var.domain })}
+    EndOfPython
+  EOT
+}
 
 // Since all DNSimple DNS record types and features are supported using the Terraform Provider, we can trivially set up a regional record with ease. This provides a simple and flexible way to deploy multi-region infrastructure, whether it's multi-master, geo-replication, or something else, without leaving Terraform.
-# resource "dnsimple_zone_record" "api_sydney_record" {
-#   zone_name = var.domain
-#   name      = "api"
-#   type      = "A"
-#   ttl       = 600
-#   value     = aws_instance.api-sydney.public_ip
-#   regions   = ["SYD"]
-# }
+resource "dnsimple_zone_record" "api_sydney_record" {
+  zone_name = var.domain
+  name      = "api"
+  type      = "A"
+  ttl       = 600
+  value     = aws_instance.api-sydney.public_ip
+  regions   = ["SYD"]
+}
 
 // Now that we have our API service up and running, it's time for the final part of our stack: the client. For simplicity, our client is a simple single-page HTML app with some light JavaScript, so we can use a single S3 bucket to serve the HTML over the Internet. Feel free to substitute this section with the client component in your system or architecture.
 
