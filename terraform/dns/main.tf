@@ -58,20 +58,9 @@ resource "aws_s3_bucket" "emails" {
 // This sets the policy for the S3 bucket we've just created to allow SES to write to it. See more details at https://docs.aws.amazon.com/ses/latest/dg/receiving-email-permissions.html#receiving-email-permissions-s3.
 resource "aws_s3_bucket_policy" "emails" {
   bucket = aws_s3_bucket.emails.id
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Sid" : "AllowSESPuts",
-        "Effect" : "Allow",
-        "Principal" : {
-          "Service" : "ses.amazonaws.com"
-        },
-        "Action" : "s3:PutObject",
-        "Resource" : "arn:aws:s3:::${var.domain}-emails/*",
-      }
-    ]
-  })
+  policy = jsonencode(templatefile("iam/emails-bucket-policy.json", {
+    domain = var.domain,
+  }))
 }
 
 // A rule set tells SES what to do with incoming emails, with one or more rules. We'll create the only rule next, but first we need a rule set for the rule to be created into.
@@ -116,39 +105,13 @@ resource "aws_iam_role" "api" {
 
   inline_policy {
     name = "main"
-    policy = jsonencode({
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Sid = ""
-          Action = [
-            "s3:GetObject",
-            "s3:ListBucket",
-          ]
-          Effect = "Allow"
-          Resource = [
-            "arn:aws:s3:::${var.domain}-emails/*",
-            "arn:aws:s3:::${var.domain}-emails",
-          ]
-        }
-      ]
-    })
+    policy = jsonencode(templatefile("iam/api-permissions.json", {
+      domain = var.domain,
+    }))
   }
 
   // Allow our EC2 instances (which we'll create later) to assume this role.
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      },
-    ]
-  })
+  assume_role_policy = jsonencode(file("iam/api-role-assume.json"))
 }
 
 // We'll create an instance profile so that instances can assume the role we've just created. Learn more about them at https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html.
@@ -166,14 +129,9 @@ resource "aws_instance" "api-virginia" {
   associate_public_ip_address = true
   instance_type               = "t3a.micro"
   iam_instance_profile        = aws_iam_instance_profile.api.name
-  user_data                   = <<-EOT
-    #!/bin/bash
-    python3 -m ensurepip
-    pip3 install boto3 Flask flask-cors
-    python3 << 'EndOfPython'
-    ${templatefile("api.py", { domain = var.domain })}
-    EndOfPython
-  EOT
+  user_data                   = templatefile("cloud-init.sh", {
+    code = templatefile("api.py", { domain = var.domain }),
+  })
 }
 
 // Create the A record for our API server in Virginia.
@@ -193,14 +151,9 @@ resource "aws_instance" "api-sydney" {
   associate_public_ip_address = true
   instance_type               = "t3a.micro"
   iam_instance_profile        = aws_iam_instance_profile.api.name
-  user_data                   = <<-EOT
-    #!/bin/bash
-    python3 -m ensurepip
-    pip3 install boto3 Flask flask-cors
-    python3 << 'EndOfPython'
-    ${templatefile("api.py", { domain = var.domain })}
-    EndOfPython
-  EOT
+  user_data                   = templatefile("cloud-init.sh", {
+    code = templatefile("api.py", { domain = var.domain }),
+  })
 }
 
 // Since all DNSimple DNS record types and features are supported using the Terraform Provider, we can trivially set up a regional record with ease. This provides a simple and flexible way to deploy multi-region infrastructure, whether it's multi-master, geo-replication, or something else, without leaving Terraform.
@@ -233,22 +186,9 @@ resource "aws_s3_bucket_policy" "app" {
   // We must wait for `block_public_policy` to be disabled.
   depends_on = [aws_s3_bucket_public_access_block.app]
   bucket     = aws_s3_bucket.app.bucket
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Sid" : "PublicReadGetObject",
-        "Effect" : "Allow",
-        "Principal" : "*",
-        "Action" : [
-          "s3:GetObject"
-        ],
-        "Resource" : [
-          "arn:aws:s3:::${var.domain}/*"
-        ]
-      }
-    ]
-  })
+  policy = jsonencode(templatefile("iam/app-bucket-policy.json", {
+    domain = var.domain,
+  }))
 }
 
 // Configure the bucket to behave like a website. To learn more about this S3 feature, see https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html.
