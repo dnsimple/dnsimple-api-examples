@@ -17,7 +17,7 @@ env:
 
 defaults:
   run:
-    working-directory: ${{ env.CONFIG_DIRECTORY }}
+    working-directory: "${{ inputs.config-directory }}"
 
 jobs:
   terraform:
