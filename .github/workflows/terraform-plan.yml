@@ -15,16 +15,15 @@ env:
   TF_WORKSPACE: "${{ inputs.tf-workspace }}"
   CONFIG_DIRECTORY: "${{ inputs.config-directory }}"
 
-defaults:
-  run:
-    working-directory: "${{ inputs.config-directory }}"
-
 jobs:
   terraform:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
+    defaults:
+      run:
+        working-directory: "${{ inputs.config-directory }}"
     steps:
       - uses: actions/checkout@v4
 
