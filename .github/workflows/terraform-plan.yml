@@ -15,6 +15,10 @@ env:
   TF_WORKSPACE: "${{ inputs.tf-workspace }}"
   CONFIG_DIRECTORY: "${{ inputs.config-directory }}"
 
+defaults:
+  run:
+    working-directory: ${{ env.CONFIG_DIRECTORY }}
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
