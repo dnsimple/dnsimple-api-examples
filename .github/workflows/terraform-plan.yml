@@ -12,6 +12,7 @@ on:
 env:
   TF_CLOUD_ORGANIZATION: "DNSimple"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+  TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "${{ inputs.tf-workspace }}"
   CONFIG_DIRECTORY: "${{ inputs.config-directory }}"
 
