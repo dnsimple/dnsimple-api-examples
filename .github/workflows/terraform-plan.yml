@@ -33,6 +33,7 @@ jobs:
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
+        continue-on-error: true
 
       - name: Comment on pull request for Formatting
         if: ${{ steps.fmt.outcome != 'success' }}
@@ -73,6 +74,7 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+        continue-on-error: true
 
       - name: Comment on pull request for Validation
         if: ${{ steps.validate.outcome != 'success' }}
