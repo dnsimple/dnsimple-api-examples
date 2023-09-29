@@ -34,26 +34,34 @@ variable "dnsimple_domain" {
   type        = string
 }
 
-resource "dnsimple_registered_domain" "domain" {
+resource "dnsimple_domain" "domain" {
   name = "${var.dnsimple_domain}"
-
-  contact_id            = 45600
-  auto_renew_enabled    = true
-  whois_privacy_enabled = true
-  dnssec_enabled        = false
 }
 
 # Order a new let's encrypt certificate
 resource "dnsimple_lets_encrypt_certificate" "certificate_order" {
-    domain_id  = dnsimple_registered_domain.domain.id
+    domain_id  = dnsimple_domain.domain.id
     auto_renew = false
     name       = "www"
 }
 
+# Wait for the certificate to be issued
+resource "null_resource" "wait_for_certificate" {
+  provisioner "local-exec" {
+    command = "./wait_for_certificate.sh ${var.dnsimple_token} ${var.dnsimple_account} ${var.dnsimple_domain} ${dnsimple_lets_encrypt_certificate.certificate_order.id}"
+  }
+
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+}
+
 # dnsimple_lets_encrypt_certificate.state must be 'issued' to proceed.
 data "dnsimple_certificate" "certificate" {
-  domain         = dnsimple_registered_domain.domain.name
+  domain         = dnsimple_domain.domain.name
   certificate_id = dnsimple_lets_encrypt_certificate.certificate_order.id
+
+  depends_on = [ null_resource.wait_for_certificate ]
 }
 
 resource "local_file" "certificate_pem" {
@@ -86,6 +94,8 @@ resource "docker_image" "terraform_tls_demo" {
     context = "${path.module}/.."
     tag     = ["latest"]
   }
+
+  depends_on = [ local_file.certificate_key, local_file.certificate_pem, local_file.nginx_conf ]
 }
 
 resource "docker_container" "terraform_tls_demo" {

@@ -1,4 +1,4 @@
-# Use an official Nginx image as the base image
+# Use an Nginx image as the base
 FROM nginx
 
 # Copy Nginx configuration files
@@ -9,7 +9,7 @@ COPY nginx/ssl/nginx.pem /etc/nginx/ssl/
 COPY nginx/ssl/nginx.key /etc/nginx/ssl/
 
 # Copy static web assets
-COPY react-app/dist /usr/share/nginx/html
+COPY app /usr/share/nginx/html
 
 # Expose HTTP and HTTPS ports
 EXPOSE 80
