@@ -51,7 +51,7 @@ resource "dnsimple_zone_record" "test" {
 }
 
 resource "dnsimple_zone_record" "tmp" {
-zone_name = local.dns_solutions
+  zone_name = local.dns_solutions
   name      = "tmp"
   value     = "1.2.3.4"
   type      = "A"
