@@ -23,12 +23,12 @@ To run this demo, you will need:
 
 - An authoritative zone on DNSimple, where the DNS resolution is not delegated or disabled. If you purchased or transferred your domain to DNSimple, or you have pointed your domain's nameservers to DNSimple at your registrar, you should be good to go.
   - If you'd like to registrar and set up a domain also entirely through Terraform, check out our [domains demo](../domains).
-- An API token for your DNSimple account must be generated and stored in your environment variables. See [here](https://support.dnsimple.com/articles/api-access-token/) for more details.
+- An API token for your DNSimple account must be generated and stored as the `DNSIMPLE_TOKEN` environment variable. See [here](https://support.dnsimple.com/articles/api-access-token/) for more details. You'll also need to store your DNSimple account ID in the `DNSIMPLE_ACCOUNT` environment variable.
 - An AWS account. You must have AWS credentials on your machine ready to go. See [this guide](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration) for more details.
 - Terraform must be installed. You can download it [here](https://developer.hashicorp.com/terraform/downloads).
 
 > [!WARNING]
-> DNS records will be overwritten on the zone, which may erase any current records and break services running on your domain.
+> It's best to use a fresh zone for testing, as we'll create common records at the root including ALIAS and MX, which will likely conflict with an existing in-use zone.
 
 > [!NOTE]
 > This will create resources on your AWS account, which may incur charges. After running this demo, if you don't need it anymore, make sure to delete the resources.
@@ -42,6 +42,8 @@ To get started, set up the Terraform project. Only one variable is required to r
 ```bash
 terraform init
 export TF_VAR_domain=mydomain.com
+export DNSIMPLE_TOKEN=abc
+export DNSIMPLE_ACCOUNT=1234
 ```
 
 Now, you can run the entire demo all at once, by running:
@@ -51,6 +53,8 @@ terraform apply
 ```
 
 You can also run the demo incrementally, at your pace, by commenting out all code in [main.tf](./main.tf) after the point where you'd like to stop, and then running the above `terraform apply` command. Once you're ready to proceed, uncomment out some more code, and then repeat.
+
+By the end of the demo, you will have set up a mail inbox service for your domain. You can test this out by sending an email to your domain, with any valid value for the [local part](https://datatracker.ietf.org/doc/html/rfc3696#section-3) e.g. `hello@mydomain.com`.
 
 ## Cleaning up
 

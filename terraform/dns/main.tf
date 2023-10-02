@@ -58,9 +58,9 @@ resource "aws_s3_bucket" "emails" {
 // This sets the policy for the S3 bucket we've just created to allow SES to write to it. See more details at https://docs.aws.amazon.com/ses/latest/dg/receiving-email-permissions.html#receiving-email-permissions-s3.
 resource "aws_s3_bucket_policy" "emails" {
   bucket = aws_s3_bucket.emails.id
-  policy = jsonencode(templatefile("iam/emails-bucket-policy.json", {
+  policy = templatefile("iam/emails-bucket-policy.json", {
     domain = var.domain,
-  }))
+  })
 }
 
 // A rule set tells SES what to do with incoming emails, with one or more rules. We'll create the only rule next, but first we need a rule set for the rule to be created into.
@@ -105,13 +105,13 @@ resource "aws_iam_role" "api" {
 
   inline_policy {
     name = "main"
-    policy = jsonencode(templatefile("iam/api-permissions.json", {
+    policy = templatefile("iam/api-permissions.json", {
       domain = var.domain,
-    }))
+    })
   }
 
   // Allow our EC2 instances (which we'll create later) to assume this role.
-  assume_role_policy = jsonencode(file("iam/api-role-assume.json"))
+  assume_role_policy = file("iam/api-role-assume.json")
 }
 
 // We'll create an instance profile so that instances can assume the role we've just created. Learn more about them at https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html.
@@ -120,8 +120,17 @@ resource "aws_iam_instance_profile" "api" {
   role = aws_iam_role.api.name
 }
 
+// As our API server listens on port 80 (plaintext HTTP), create a security group to ensure the server can be reached publicly.
+resource "aws_security_group" "sg-virginia" {
+  name = "allow_http"
+  ingress {
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 // Now, we can create the instances and deploy our API service. We'll use a simple mechanism to deploy and run the service, which is to simply copy the Python code into our cloud-init script and run it immediately and indefinitely when our instance starts up. You can learn more about cloud-init at https://cloud-init.io/.
-// As our API server listens on port 80 (plaintext HTTP), ensure this server can be reached publicly over port 80, so adjust any VPC, subnet, and NSG attributes as necessary. WARNING: Because this is unencrypted, for the purposes of this demo, don't send any private or sensitive information via email to this domain!
 // Also, if you'd like to set up SSH access, make sure to provide `key_name`.
 resource "aws_instance" "api-virginia" {
   // As of 2023-09-18, this is the AMI ID for Amazon Linux 2013 (x86) in us-east-1.
@@ -129,7 +138,8 @@ resource "aws_instance" "api-virginia" {
   associate_public_ip_address = true
   instance_type               = "t3a.micro"
   iam_instance_profile        = aws_iam_instance_profile.api.name
-  user_data                   = templatefile("cloud-init.sh", {
+  security_groups             = [aws_security_group.sg-virginia]
+  user_data = templatefile("cloud-init.sh", {
     code = templatefile("api.py", { domain = var.domain }),
   })
 }
@@ -143,6 +153,16 @@ resource "dnsimple_zone_record" "api_virginia_record" {
   value     = aws_instance.api-virginia.public_ip
 }
 
+// We'll create a replica in Sydney (see the next block for rationale), so we need a security group there too.
+resource "aws_security_group" "sg-sydney" {
+  name = "allow_http"
+  ingress {
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 // To demonstrate regional records, we'll spin up a replica API server in Sydney. It runs the same API server and will serve identical data, but will provide a lower latency experience for users in Australia.
 resource "aws_instance" "api-sydney" {
   provider = aws.aws-sydney
@@ -151,7 +171,8 @@ resource "aws_instance" "api-sydney" {
   associate_public_ip_address = true
   instance_type               = "t3a.micro"
   iam_instance_profile        = aws_iam_instance_profile.api.name
-  user_data                   = templatefile("cloud-init.sh", {
+  security_groups             = [aws_security_group.sg-sydney]
+  user_data = templatefile("cloud-init.sh", {
     code = templatefile("api.py", { domain = var.domain }),
   })
 }
@@ -186,9 +207,9 @@ resource "aws_s3_bucket_policy" "app" {
   // We must wait for `block_public_policy` to be disabled.
   depends_on = [aws_s3_bucket_public_access_block.app]
   bucket     = aws_s3_bucket.app.bucket
-  policy = jsonencode(templatefile("iam/app-bucket-policy.json", {
+  policy = templatefile("iam/app-bucket-policy.json", {
     domain = var.domain,
-  }))
+  })
 }
 
 // Configure the bucket to behave like a website. To learn more about this S3 feature, see https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html.
