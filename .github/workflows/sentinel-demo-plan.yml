@@ -82,6 +82,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const planOutput = `${{ steps.plan.outputs.stdout }}`;
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
             #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
@@ -90,7 +91,7 @@ jobs:
             <details><summary>Show Plan</summary>
 
             \`\`\`\n
-            ${{ steps.plan.outputs.stdout }}
+            ${planOutput}
             \`\`\`
 
             </details>
