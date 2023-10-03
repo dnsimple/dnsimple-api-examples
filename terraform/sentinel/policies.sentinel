@@ -1,0 +1,312 @@
+import "tfplan/v2" as tfplan
+import "strings"
+
+summary = func(input, doc) {
+	result = false
+	if input.violations is empty {
+		return true
+	} else {
+		log(input, doc)
+	}
+	return result
+}
+
+log = func(input, doc) {
+	header(input, doc)
+	violations(input, doc)
+	return null
+}
+
+header = func(input, doc) {
+	print(
+		"\t========================================================================\n",
+		"\tName        : " + doc.file_name + "\n",
+		"\tProvider    : " + doc.provider + "\n",
+		"\tResource    : " + doc.resource + "\n",
+		"\tParameter   : " + doc.parameter + "\n",
+		"\t========================================================================\n",
+		"\tFor a list of allowed parameter options see:\n",
+		"\t" + doc.md_url + "\n",
+	)
+	return null
+}
+
+violations = func(input, doc) {
+	print(
+		"\t========================================================================\n",
+		"\tRESOURCE VIOLATIONS\n",
+		"\t" + doc.violation + "\n",
+		"\t========================================================================\t",
+	)
+	for input.violations as violation {
+		print(
+			"\t",
+			"name       : " + violation.name + "\n\t",
+			"type       : " + violation.type + "\n\t",
+			"address    : " + violation.address + "\n\t",
+			"message    : " + violation.message + "\t\n",
+			"\t------------------------------------------------------------------------\t",
+		)
+	}
+	if (input.violations is not empty) {
+		print(
+			"\t",
+			"Resources out of compliance: " + string(length(input.violations)) + "\n",
+			"\t------------------------------------------------------------------------\t",
+		)
+	}
+	return null
+}
+
+
+valid_actions = [
+	["no-op"],
+	["create"],
+	["update"],
+]
+
+allowed_delegation_records = [
+	"ns1.dnsimple.com",
+	"ns2.dnsimple.com",
+	"ns3.dnsimple.com",
+	"ns4.dnsimple.com",
+	"ns4.dnsimple-edge.org",
+]
+
+skip_enforcing_domain_names = []
+
+dnssec_skip_enforcing_domain_tlds = [".SG", ".COM.SG", ".CZ"]
+
+dnssec_state = true
+
+whois_privacy_skip_enforcing_domain_tlds = [".SG", ".COM.SG", ".CZ", ".BIO"]
+
+whois_privacy_state = true
+
+auto_renew_state = true
+
+transfer_lock_state = true
+
+allowed_contact_ids = [10169]
+
+auto_renew_doc = {
+	"allowed":   auto_renew_state,
+	"error":     " is not an allowed auto_renew_enabled state.",
+	"file_name": "policies.sentinel",
+	"name":      "Enforeced Domain Auto Renew State",
+	"md_url":    "https://github.com/dnsimple/policy-library-dnsimple-terraform/blob/main/README.md",
+	"parameter": "auto_renew_enabled",
+	"provider":  "dnsimple/dnsimple",
+	"resource":  "dnsimple_registered_domain",
+	"violation": "The domain auto_renew_enabled state should be ${auto_renew_state}",
+}
+
+whois_privacy_doc = {
+	"allowed":   whois_privacy_state,
+	"error":     " is not an allowed whois_privacy_enabled state.",
+	"file_name": "policies.sentinel",
+	"name":      "Enforeced Domain Whois Privacy State",
+	"md_url":    "https://github.com/dnsimple/policy-library-dnsimple-terraform/blob/main/README.md",
+	"parameter": "whois_privacy_enabled",
+	"provider":  "dnsimple/dnsimple",
+	"resource":  "dnsimple_registered_domain",
+	"violation": "The domain whois_privacy_enabled state should be ${whois_privacy_state}",
+}
+
+transfer_lock_doc = {
+	"allowed":   transfer_lock_state,
+	"error":     " is not an allowed transfer_lock_enabled state.",
+	"file_name": "policies.sentinel",
+	"name":      "Enforeced Domain Transfer Lock State",
+	"md_url":    "https://github.com/dnsimple/policy-library-dnsimple-terraform/blob/main/README.md",
+	"parameter": "transfer_lock_enabled",
+	"provider":  "dnsimple/dnsimple",
+	"resource":  "dnsimple_registered_domain",
+	"violation": "The domain transfer_lock_enabled state should be ${transfer_lock_state}",
+}
+
+domain_delegation_doc = {
+	"allowed":   allowed_delegation_records,
+	"error":     " is not an allowed name_servers set.",
+	"file_name": "policies.sentinel",
+	"name":      "Enforeced Domain Delegation",
+	"md_url":    "https://github.com/dnsimple/policy-library-dnsimple-terraform/blob/main/README.md",
+	"parameter": "name_servers",
+	"provider":  "dnsimple/dnsimple",
+	"resource":  "dnsimple_domain_delegation",
+	"violation": "The domain name_servers should only include " + strings.join(allowed_delegation_records, ", ") + ".",
+}
+
+dnssec_doc = {
+	"allowed":   dnssec_state,
+	"error":     " is not an allowed dnssec_enabled state.",
+	"file_name": "policies.sentinel",
+	"name":      "Enforeced Domain DNSSEC State",
+	"md_url":    "https://github.com/dnsimple/policy-library-dnsimple-terraform/blob/main/README.md",
+	"parameter": "dnssec_enabled",
+	"provider":  "dnsimple/dnsimple",
+	"resource":  "dnsimple_registered_domain",
+	"violation": "The domain dnssec_enabled state should be ${dnssec_state}",
+}
+
+contact_id_doc = {
+	"allowed":   allowed_contact_ids,
+	"error":     " is not an allowed contact id.",
+	"file_name": "policies.sentinel",
+	"name":      "Enforeced Domain Contact ID",
+	"md_url":    "https://github.com/dnsimple/policy-library-dnsimple-terraform/blob/main/README.md",
+	"parameter": "contact_id",
+	"provider":  "dnsimple/dnsimple",
+	"resource":  "dnsimple_registered_domain",
+	"violation": "The domain contact_id should be in " + strings.join(allowed_contact_ids, ", ") + ".",
+}
+
+get_enforcable_resources = func(doc) {
+  all_resources = filter tfplan.resource_changes as _, rc {
+    rc.type is doc.resource and
+		rc.mode is "managed" and
+		rc.change.actions in valid_actions
+  }
+
+  if (length(skip_enforcing_domain_names) else 0) > 0 {
+    if doc.resource is "dnsimple_registered_domain" {
+      all_resources = filter all_resources as _, rc {
+        rc.change.after.name not in skip_enforcing_domain_names
+      }
+    }
+
+    if doc.resource is "dnsimple_domain_delegation" {
+      all_resources = filter all_resources as _, rc {
+        rc.change.after.domain not in skip_enforcing_domain_names
+      }
+    }
+  }
+
+  return all_resources
+}
+
+validate_boolean_parameter = func(doc, resources) {
+  violators = filter resources as _, rc {
+    rc.change.after[doc.parameter] is not doc.allowed
+  }
+
+  return {
+    "name":        doc.name,
+    "violations":  map violators as _, violation {
+      {
+        "name":     violation.name,
+        "type":     violation.type,
+        "address":  violation.address,
+        "message":  string(violation.change.after[doc.parameter]) + doc.error,
+      }
+    },
+  }
+}
+
+validate_in_list_parameter = func(doc, resources) {
+  violators = filter resources as _, rc {
+    rc.change.after[doc.parameter] not in doc.allowed
+  }
+
+  return {
+    "name":        doc.name,
+    "violations":  map violators as _, violation {
+      {
+        "name":     violation.name,
+        "type":     violation.type,
+        "address":  violation.address,
+        "message":  string(violation.change.after[doc.parameter]) + doc.error,
+      }
+    },
+  }
+}
+
+all_values_included = func(values, allowed) {
+  for values as _, value {
+    if value not in allowed {
+      return false
+    }
+  }
+  return true
+}
+
+validate_list_values_parameter = func(doc, resource) {
+  violators = filter resource as _, rc {
+    all_values_included(rc.change.after[doc.parameter], doc.allowed) is false
+  }
+
+  return {
+    "name":        doc.name,
+    "violations":  map violators as _, violation {
+      {
+        "name":     violation.name,
+        "type":     violation.type,
+        "address":  violation.address,
+        "message":  strings.join(violation.change.after[doc.parameter], ", ") + doc.error,
+      }
+    },
+  }
+}
+
+validate_whois_privacy  = func(doc) {
+  resources = get_enforcable_resources(whois_privacy_doc)
+  // Filter resources by TLD
+  if (length(whois_privacy_skip_enforcing_domain_tlds) else 0) > 0 {
+    resources = filter resources as _, r {
+      // Check if the domain name ends with any of the TLDs
+      all whois_privacy_skip_enforcing_domain_tlds as _, tld {
+        !strings.has_suffix(r.change.after.name, strings.to_lower(tld))
+      }
+    }
+  }
+
+  return validate_boolean_parameter(doc, resources)
+}
+
+validate_dnssec = func(doc) {
+  resources = get_enforcable_resources(dnssec_doc)
+  // Filter resources by TLD
+  if (length(dnssec_skip_enforcing_domain_tlds) else 0) > 0 {
+    resources = filter resources as _, r {
+      // Check if the domain name ends with any of the TLDs
+      all dnssec_skip_enforcing_domain_tlds as _, tld {
+        !strings.has_suffix(r.change.after.name, strings.to_lower(tld))
+      }
+    }
+  }
+
+  return validate_boolean_parameter(doc, resources)
+}
+
+auto_renew = rule {
+  summary(validate_boolean_parameter(auto_renew_doc, get_enforcable_resources(auto_renew_doc)), auto_renew_doc)
+}
+
+whois_privacy = rule {
+  summary(validate_whois_privacy(whois_privacy_doc), whois_privacy_doc)
+}
+
+transfer_lock = rule {
+  summary(validate_boolean_parameter(transfer_lock_doc, get_enforcable_resources(transfer_lock_doc)), transfer_lock_doc)
+}
+
+dnssec = rule {
+  summary(validate_dnssec(dnssec_doc), dnssec_doc)
+}
+
+contact_id = rule {
+  summary(validate_in_list_parameter(contact_id_doc, get_enforcable_resources(contact_id_doc)), contact_id_doc)
+}
+
+domain_delegation = rule {
+  summary(validate_list_values_parameter(domain_delegation_doc, get_enforcable_resources(domain_delegation_doc)), domain_delegation_doc)
+}
+
+main = rule {
+  auto_renew and
+  whois_privacy and
+  transfer_lock and
+  dnssec and
+  contact_id and
+  domain_delegation
+}

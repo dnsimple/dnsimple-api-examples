@@ -1,0 +1,7 @@
+dnsimple_token      = "dnsimpletest_a_hzwq4GzPQXQ5TwgDcqOhKnvvz70cYvKT"
+dnsimple_account    = 1234
+dnsimple_sandbox    = true
+dnsimple_contact_id = 10169
+dnsimple_domain_a   = "dnsimple-1-0-terraform.bio"
+dnsimple_domain_b   = "om18mg66p0rpbryzc45fnf2o7i23wr4afaddg9iybsi1f8v35qzmjy259evetm.com"
+
