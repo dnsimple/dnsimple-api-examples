@@ -1,0 +1,10 @@
+.:53 {
+    dnsimple DNSIMPLE_MANAGED_DOMAIN.TLD {
+        identifier "default"
+        refresh    60s
+    }
+    forward . 1.1.1.1
+    cache
+    log
+    errors
+}
