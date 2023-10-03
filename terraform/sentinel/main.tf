@@ -15,7 +15,7 @@ resource "dnsimple_registered_domain" "domain_b" {
   auto_renew_enabled    = true
   dnssec_enabled        = true
   transfer_lock_enabled = true
-  whois_privacy_enabled = false
+  whois_privacy_enabled = true
 }
 
 resource "dnsimple_domain_delegation" "domain_a" {
@@ -23,7 +23,7 @@ resource "dnsimple_domain_delegation" "domain_a" {
   name_servers = [
     "ns1.dnsimple.com",
     "ns2.dnsimple.com",
-    "ns3.dnsimpl.com",
+    "ns3.dnsimple.com",
     "ns4.dnsimple-edge.org",
   ]
 }
