@@ -1,6 +1,6 @@
 # DNSimple Terraform DNS Change Management Demo
 
-Welcome to the "DNSimple Terraform DNS Change Management" demo! Managing DNS records has never been so straightforward and collaborative. Leveraging the power of DNSimple's Terraform provider and the GitOps approach, this demo guides you through the process of managing DNS records for a zone seamlessly. By integrating these tools, you can now gain clear insights into DNS changes right within your PRs, fostering transparency and democratizing DNS management access across teams.
+Welcome to DNSimple's Terraform DNS Change Management demo. Managing DNS records has never been so straightforward or collaborative. Leveraging the power of DNSimple's Terraform provider and the GitOps approach, this demo guides you through the process of seamlessly managing DNS records for a zone. By integrating these tools, you'll gain clear insights into DNS changes within your PRs, fostering transparency and democratizing DNS management access across teams.
 
 What you can to gain from this demo:
 
