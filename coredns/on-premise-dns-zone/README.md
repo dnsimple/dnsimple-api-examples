@@ -1,12 +1,14 @@
-### Introduction:
+# Deploy on-premise DNS using CoreDNS and DNSimple
 
-In this demo, we will use CoreDNS compiled with the [DNSimple plugin](https://github.com/dnsimple/coredns-dnsimple/) to deploy an on-premise CoreDNS instance with DNS record management from within the DNSimple web application.
+DNSimple's CoreDNS plugin enables businesses and individual developers alike to leverage the extensibility of CoreDNS, while managing DNS records effortlessly through DNSimple's intuitive web application. Facilitate streamlined DNS record management and ensure that your on-premise DNS resolution is tightly aligned with any changes or updates made within the DNSimple platform. Whether managing a singular domain or juggling numerous domains with many DNS records, DNSimple's CoreDNS integration offers increased reliability, ease of management and enterprise-level stability.
 
-DNSimple's CoreDNS plugin enables businesses and individual developers alike to leverage the extensibility of CoreDNS, while managing DNS records effortlessly through DNSimple's intuitive web application. Not only will this integration facilitate streamlined DNS record management but it will also ensure that your on-premise DNS resolution is tightly aligned with any changes or updates made within DNSimple’s platform. Whether managing a singular domain or juggling numerous domains with many DNS records, offer increased reliability, ease of management, and enterprise-level stability with DNSimple and CoreDNS.
+## Introduction
 
-### Prerequisites:
+In this demo, we will use CoreDNS compiled with the [DNSimple CoreDNS plugin](https://github.com/dnsimple/coredns-dnsimple/) to deploy an on-premise CoreDNS instance supporting synchronized DNS record management from within the DNSimple platform.
 
-- A machine where you can install and run CoreDNS (local workstation, virtual machine or physical server)
+## Prerequisites
+
+- A machine where you can install and run CoreDNS (local workstation, physical server or virtual machine)
 - A domain managed with DNSimple
 - An API token from DNSimple, which will allow CoreDNS to access DNSimple’s services
 - Basic knowledge of DNS and terminal/command line usage
@@ -14,45 +16,34 @@ DNSimple's CoreDNS plugin enables businesses and individual developers alike to 
 
 ### Step 1: Enable the DNSimple CoreDNS Integration
 
-1. From the DNSimple application, navigate to the 'Domain->Integrations' page.
+1. From the DNSimple application, navigate to the 'Domain->Integrations' page and select 'Configure' next to the CoreDNS integration.
+![domain_integrations](./images/domain_integrations.png)
 
-2. Select 'Configure' next to the CoreDNS integration in the domain settings.
+2. Leave the Cluster Identifier value as `default` and note down your DNSimple `account_id` from the provided Corefile.
+![coredns_setup](./images/coredns_setup.png)
 
-3. Leave the Cluster Identifier value as `default`. 
+3. Click 'Create Integration' and verify the CoreDNS integration is active.
+![coredns_active](./images/coredns_active.png)
 
-4. **Note** down your DNSimple `account_id` in the example Corefile.
-
-5. Click 'Create Integration' and verify the CoreDNS integration is active.
-
-### Step 2: Compile/Install CoreDNS
-
-<details>
-<summary>Option A: Downloading the Precompiled Binary</summary>
-<br>
-1. Go to the [DNSimple CoreDNS releases page](https://github.com/dnsimple/coredns-dnsimple/releases)
-2. Download the latest release for your OS
-3. Extract and move the binary to a location in your PATH
-</details>
+### Step 2: Compile or Install CoreDNS
 
 <details>
-<summary>Option B: Build from Source</summary>
+<summary>A: Compile from Source</summary>
 <br>
-1. Clone the CoreDNS repository
-Clone the CoreDNS source code from its official GitHub repository.
+
+1. Clone the CoreDNS source code from its official GitHub repository:
 
 ```shell
 git clone https://github.com/coredns/coredns.git
 ```
 
-2. Navigate to the CoreDNS directory
-Switch to the coredns directory which has been cloned to your local system.
+2. Navigate to the CoreDNS directory:
 
 ```shell
 cd coredns
 ```
 
-3: Add the DNSimple Plugin to `plugin.cfg`
-Modify the plugin.cfg file to include the DNSimple plugin by adding the import statement immeditely after route53.
+3. Modify the `plugin.cfg` file to include the DNSimple plugin by adding the import statement after route53.
 
 ```txt
 route53:route53
@@ -60,21 +51,30 @@ dnsimple:github.com/dnsimple/coredns-dnsimple
 ...
 ```
 
-4. Load the CoreDNS DNSimple Plugin
-Utilize go get to download the DNSimple plugin, making it available for the upcoming build process.
+4. Get the CoreDNS DNSimple Plugin:
 
 ```shell
 go get github.com/dnsimple/coredns-dnsimple
 ```
 
-5. Build CoreDNS with the External Plugin
-Trigger the build process, generating a new CoreDNS binary that includes the DNSimple plugin.
+5. Build CoreDNS with the DNSimple Plugin:
 
 ```shell
 go generate && go build
 ```
 
-6. Verify and move the binary to a location in your PATH
+6. Verify and move the binary to a location in your PATH.
+
+</details>
+
+<details>
+<summary>B: Download the Precompiled Binary</summary>
+<br>
+
+1. Go to the [DNSimple CoreDNS releases page](https://github.com/dnsimple/coredns-dnsimple/releases)
+2. Download the latest release for your OS
+3. Extract and move the binary to a location in your PATH
+
 </details>
 
 ### Step 3: Export your DNSimple Credentials
@@ -84,11 +84,11 @@ export DNSIMPLE_ACCOUNT_ID=1234
 export DNSIMPLE_TOKEN=dnsimple-api-token
 ```
 
-Replace the `DNSIMPLE_ACCOUNT_ID` and `DNSIMPLE_TOKEN` values with your actual DNSimple credentials.
+Replace `DNSIMPLE_ACCOUNT_ID` and `DNSIMPLE_TOKEN` values with your actual DNSimple account ID and API token.
 
 ### Step 4: Create a Corefile and Run CoreDNS
 
-1. Create a `Corefile`.
+1. Create a `Corefile` or copy the example provided with this repository:
 
 ```txt
 .:53 {
@@ -105,7 +105,7 @@ Replace the `DNSIMPLE_ACCOUNT_ID` and `DNSIMPLE_TOKEN` values with your actual D
 
 Replace `DNSIMPLE_MANAGED_DOMAIN.TLD` with your actual domain managed at DNSimple. This configuration will use DNSimple for domain information and forward other queries to Cloudflare’s Public DNS server (1.1.1.1).
 
-2. With the `Corefile` created, start CoreDNS pointing to your `Corefile`.
+2. With the `Corefile` created, start CoreDNS pointing to your `Corefile`:
 
 ```shell
 coredns -conf ./Corefile
@@ -116,7 +116,7 @@ coredns -conf ./Corefile
 From another machine, or the same machine, query the DNS server to ensure that it is resolving domains correctly.
 
 ```shell
-dig @{DNS_SERVER_ADDRESS} {DNSIMPLE_MANAGED_DOMAIN.TLD}
+dig @{DNS_SERVER_ADDRESS} {DNSIMPLE_MANAGED_DOMAIN.TLD} NS
 ```
 
 ### Conclusion:
