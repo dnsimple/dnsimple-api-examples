@@ -2,13 +2,13 @@
 
 Welcome to DNSimple's Terraform DNS Change Management demo. Managing DNS records has never been so straightforward or collaborative. Leveraging the power of DNSimple's Terraform provider and the GitOps approach, this demo guides you through the process of seamlessly managing DNS records for a zone. By integrating these tools, you'll gain clear insights into DNS changes within your PRs, fostering transparency and democratizing DNS management access across teams.
 
-What you can to gain from this demo:
+What you'll gain from this demo:
 
 - DNSimple & Terraform Integration
 Discover the seamless integration of DNSimple's Terraform provider, making DNS record management more efficient and developer-friendly.
 
 - GitOps-Driven Feedback
-By following a GitOps approach, get instant feedback on your DNS changes directly in your Pull Requests (PRs). This ensures that every member is informed of the changes before they're merged.
+Get instant feedback on your DNS changes directly in your Pull Requests (PRs) by following a GitOps approach. This ensures every member is informed of the changes before they're merged.
 
 - Democratizing DNS Management
 Empower team members across different departments and skill sets to propose, review, and approve DNS changes without requiring deep DNS knowledge.
@@ -20,7 +20,7 @@ Every change is tracked in your version control system, ensuring a complete audi
 Facilitate communication between developers, operations, and other stakeholders, reducing silos and promoting a unified approach to DNS management.
 
 - Enhanced Security
-By decentralizing DNS management access and maintaining a clear audit trail, reduce potential security risks and ensure accountability.
+Decentralize DNS management access and maintain a clear audit trail, reducing potential security risks and ensuring accountability.
 
 - Quick Setup
 Get up and running quickly with our step-by-step guide, regardless of your familiarity with Terraform or DNSimple.
@@ -30,11 +30,11 @@ Explore practical scenarios and use-cases that showcase the benefits and capabil
 
 ## Prerequisites
 
-- A zone on DNSimple (e.g. `example.com`) whether it's registered with DNSimple or not. It also does not need to be managed by DNSimple's name servers, but you will not be able to see the changes live only in the DNSimple UI. Don't have an account? [Sign up for free](https://dnsimple.com/sign_up) today!
-  - If you'd like to registrar and set up a domain also entirely through Terraform, check out our [domains demo](../domains).
-- API access token with write access to the zone. You can create a new token in the [following our support article](https://support.dnsimple.com/articles/api-access-token/). Please take note of the token and your account ID as you will need them later.
-- Terraform CLI installed on your machine. You can download the latest version from the [Terraform website](https://www.terraform.io/downloads.html). Alternatively, you can use the devcontainer in this repository to get up and running quickly.
-- GitHub account as this demo uses GitHub Actions to automate the DNS change management process.
+- A zone on DNSimple (e.g. `example.com`) - whether it's registered with DNSimple or not. It doesn't need to be managed by DNSimple's name servers, but you won't be able to see the changes live using just DNSimple's UI. Don't have an account? [Sign up free](https://dnsimple.com/sign_up).
+  - If you'd like to register and set up a domain entirely through Terraform, check out our [domains demo](../domains).
+- API access token with write access to the zone. Create a new token by [following our support article](https://support.dnsimple.com/articles/api-access-token/). Note the token and your account ID, as you will need them later.
+- Terraform CLI installed on your machine. Download the latest version from the [Terraform website](https://www.terraform.io/downloads.html). Alternatively, use the devcontainer in this repository to get up and running quickly.
+- GitHub account, as this demo uses GitHub Actions to automate the DNS change management process.
 
 ## Getting Started
 
@@ -74,7 +74,7 @@ Open the `terraform.tfvars` file and replace the `dnsimple_token` and `dnsimple_
 
 ### Step 4: Create a Terraform plan
 
-Before creating a plan, you should update the domain name in the `main.tf` file to match the zone you want to manage. You can do this by updating the `domain` local variable:
+Before creating a plan, update the domain name in the `main.tf` file to match the zone you want to manage. Do this by updating the `domain` local variable:
 
 ```hcl
 locals {
@@ -116,17 +116,17 @@ This will remove the changes from your zone. You can now check your zone on DNSi
 
 #### Step 1: Create a new repository
 
-Create a new repository on GitHub for example you can name it `dns-change-management-demo`. You can also fork this repository if you'd like to use it as a starting point.
+Create a new repository on GitHub, and name it something like `dns-change-management-demo`. You can also fork this repository if you'd like to use it as a starting point.
 
 #### Step 2: Prepare the repository
 
 **Terraform**
-- Create a new file named `main.tf` and copy the following content found in the [main.tf](main.tf) file in this repository.
-- Create a new file named `variables.tf` and copy the following content found in the [variables.tf](variables.tf) file in this repository.
-- Create a new file names `provider.tf` and copy the following content found in the [provider.tf](provider.tf) file in this repository.
-- Create a new file named `.gitignore` and copy the following content found in the [.gitignore](.gitignore) file in this repository.
+- Create a new file named `main.tf`, and copy the following content found in the [main.tf](main.tf) file in this repository.
+- Create a new file named `variables.tf`, and copy the following content found in the [variables.tf](variables.tf) file in this repository.
+- Create a new file names `provider.tf`, and copy the following content found in the [provider.tf](provider.tf) file in this repository.
+- Create a new file named `.gitignore`, and copy the following content found in the [.gitignore](.gitignore) file in this repository.
 
-NOTE: As Terraform will run on GitHub Actions, you can will likely want to use a backend like Terraform Cloud or AWS to store your state remotely and securely. You can find examples of how to configure these backends in Step 3 below.
+NOTE: Terraform will run on GitHub Actions, so you will likely want to use a backend like Terraform Cloud or AWS to store your state remotely and securely. You can find examples of how to configure these backends in Step 3 below.
 
 **GitHub Actions**
 - Create the following directory structure `.github/workflows/`
@@ -136,7 +136,7 @@ touch .github/workflows/terraform-plan.yml
 touch .github/workflows/terraform-apply.yml
 ```
 
-Next we will create two new workflows that will be triggered when a Pull Request is opened and pushed to, and when a commit is pushed to the `main` branch, which can be the result of a merge or a direct push. But before we do that, we will need to update the domain name in the `main.tf` file to match the zone you want to manage. You can do this by updating the `domain` local variable:
+Next, we will create two new workflows that will be triggered when a Pull Request is opened and pushed to, and when a commit is pushed to the `main` branch, which can be the result of a merge or a direct push. Before we do that, we will need to update the domain name in the `main.tf` file to match the zone you want to manage. Do this by updating the `domain` local variable:
 
 ```hcl
 locals {
@@ -146,7 +146,7 @@ locals {
 
 **Speculative Plan**
 
-When you are working on proposing a change through a Pull Request, you can use the **terraform-plan.yml** workflow to get a preview of the changes that will be applied to your account. This workflow will run `terraform plan` and post the output as a comment on the Pull Request.
+When you are working on proposing a change through a Pull Request, use the **terraform-plan.yml** workflow to get a preview of the changes that will be applied to your account. This workflow will run `terraform plan` and post the output as a comment on the Pull Request.
 
 <details>
   <summary>Click to expand the content of the <b>terraform-plan.yml</b> workflow</summary>
@@ -231,7 +231,7 @@ jobs:
 
 **Apply Changes**
 
-When you are ready to apply the changes, you can use the **terraform-apply.yml** workflow to apply the changes to your account. This workflow will run `terraform apply` and post the output as a comment on the Pull Request.
+When you are ready to apply the changes, use the **terraform-apply.yml** workflow to apply the changes to your account. This workflow will run `terraform apply` and post the output as a comment on the Pull Request.
 This will usually be the result of a merge after the Pull Request has and it's changes and speculative plan have been reviewed and approved by the team.
 
 <details>
@@ -275,17 +275,17 @@ NOTE: Please edit the `TF_VAR_dnsimple_sandbox` variable in the workflow if you 
 #### Step 3: Create GitHub Secrets
 
 Our workflows will need access to your DNSimple API token and account ID. To do this, we will create two new secrets in your repository.
-You can do this by going to your repository's settings and clicking on the "Secrets" tab. Click on "New repository secret" and create the following secrets:
+Go to your repository's settings and click the "Secrets" tab. Click on "New repository secret" and create the following secrets:
 
 - `DNSIMPLE_TOKEN` - Your DNSimple API token
 - `DNSIMPLE_ACCOUNT` - Your DNSimple account ID
 
-If you have chosen to use a backend like Terraform Cloud or AWS, you will need to add the appropriate secrets and update the workflows accordingly.
+If you have chosen to use a backend like Terraform Cloud or AWS, add the appropriate secrets, and update the workflows accordingly.
 
 <details>
   <summary>Learn more about setting up Terraform Cloud</summary>
 
-If you are using Terraform Cloud, you will need to add the following environment variables to your workflows:
+If you are using Terraform Cloud, add the following environment variables to your workflows:
 
 ```yaml
   TF_CLOUD_ORGANIZATION: "<your-organization>"
@@ -293,14 +293,14 @@ If you are using Terraform Cloud, you will need to add the following environment
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
 ```
 
-The only secret you will need to create is `TF_API_TOKEN` which is your Terraform Cloud API token. You can create a new token by going to your [Terraform Cloud user settings](https://app.terraform.io/app/settings/tokens) and clicking on "Create an API token".
+The only secret you will need to create is `TF_API_TOKEN` which is your Terraform Cloud API token. Create a new token by going to your [Terraform Cloud user settings](https://app.terraform.io/app/settings/tokens) and clicking on "Create an API token".
 
 </details>
 
 <details>
   <summary>Learn more about setting up AWS</summary>
 
-If you are using AWS, you will need to add the following environment variables to your workflows:
+If you are using AWS, add the following environment variables to your workflows:
 
 ```yaml
   AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
@@ -308,12 +308,12 @@ If you are using AWS, you will need to add the following environment variables t
   AWS_DEFAULT_REGION: "<your-region>"
 ```
 
-You will need to create two new secrets in your repository:
+Create two new secrets in your repository:
 
 - `AWS_ACCESS_KEY_ID` - Your AWS access key ID
 - `AWS_SECRET_ACCESS_KEY` - Your AWS secret access key
 
-You will also need to update the `provider.tf` file to use the AWS backend, the following block should be added to the `terraform` block:
+Update the `provider.tf` file to use the AWS backend. The following block should be added to the `terraform` block:
 
 ```hcl
   backend "s3" {
@@ -338,7 +338,7 @@ Create a new Pull Request with your changes. You will see the **terraform-plan.y
 
 Merge the Pull Request. You will see the **terraform-apply.yml** workflow run and apply the changes to your DNSimple account. You can now check your zone on DNSimple to see the changes.
 
-If you would like to see an example of how you might be able to create a workflow for a mono-repo, you can check out the workflows in this repository [here](../../.github/workflows).
+If you would like to see an example of how you might be able to create a workflow for a mono-repo, check out the workflows in the repository [here](../../.github/workflows).
 
 ## Sample Use-Cases
 
@@ -356,11 +356,11 @@ resource "dnsimple_zone_record" "local" {
 }
 ```
 
-You can now create a Pull Request with your changes. You will see the **terraform-plan.yml** workflow run and post a comment with the output of `terraform plan`. You can now review the changes and approve the Pull Request. Merge the Pull Request and you will see the **terraform-apply.yml** workflow run and apply the changes to your DNSimple account. You can now check your zone on DNSimple to see the changes.
+You can now create a Pull Request with your changes. You will see the **terraform-plan.yml** workflow run and post a comment with the output of `terraform plan`. Review the changes, and approve the Pull Request. Merge the Pull Request, and you will see the **terraform-apply.yml** workflow run and apply the changes to your DNSimple account. You can now check your zone on DNSimple to see the changes.
 
 ### Updating an existing record
 
-Let's say you want to update the `A` record for `local.example.com` to point to `198.162.0.1` instead of `127.0.0.1`. You can do this by updating the `value` attribute in your `main.tf` file:
+Let's say you want to update the `A` record for `local.example.com` to point to `198.162.0.1` instead of `127.0.0.1`. Do this by updating the `value` attribute in your `main.tf` file:
 
 ```hcl
 resource "dnsimple_zone_record" "local" {
@@ -371,11 +371,11 @@ resource "dnsimple_zone_record" "local" {
 }
 ```
 
-You can now create a Pull Request with your changes. You will see the **terraform-plan.yml** workflow run and post a comment with the output of `terraform plan`. You can now review the changes and approve the Pull Request. Merge the Pull Request and you will see the **terraform-apply.yml** workflow run and apply the changes to your DNSimple account. You can now check your zone on DNSimple to see the changes.
+You can now create a Pull Request with your changes. You will see the **terraform-plan.yml** workflow run and post a comment with the output of `terraform plan`. Review the changes, and approve the Pull Request. Merge the Pull Request, and you will see the **terraform-apply.yml** workflow run and apply the changes to your DNSimple account. You can now check your zone on DNSimple to see the changes.
 
 ---
 
-## What is next?
+## What's next?
 
 Extend your DNS management capabilities by exploring the following resources:
 
