@@ -14,7 +14,7 @@ With Sentinel’s policy-as-code framework, enforce organizational and regulator
 Every policy and DNS change is meticulously tracked in your version control system, fostering a culture of accountability and providing a clear audit trail.
 
 - Collaborative Policy Development
-Promote cross-functional collaboration in developing, reviewing, and refining policies, breaking down silos and fostering a shared responsibility towards policy adherence.
+Promote cross-functional collaboration in developing, reviewing, and refining policies, breaking down silos, and fostering a shared responsibility towards policy adherence.
 
 - Educational Journey
 Whether you are new to Terraform, Sentinel, or DNSimple, this demo provides a guided journey, aiding in grasping the fundamentals and illustrating the practical application of policy-as-code in DNS and Domain management.
@@ -27,13 +27,13 @@ By the end of this demo, you'll have a solid understanding of how to utilize Ter
 - Two domains that are registered at DNSimple. Don't have an account? [Sign up for free](https://dnsimple.com/sign_up) today!
 You can also use the [DNSimple Sandbox](https://developer.dnsimple.com/sandbox/) to test this demo out and get a feel for the platform.
 - API access token with write access to the zone. You can create a new token in the [following our support article](https://support.dnsimple.com/articles/api-access-token/). Please take note of the token and your account ID as you will need them later.
-- Terraform CLI installed on your machine. You can download the latest version from the [Terraform website](https://www.terraform.io/downloads.html). Alternatively, you can use the devcontainer in this repository to get up and running quickly.
-- GitHub account as this demo uses GitHub Actions to automate the DNS change management process. If you would like to setup a GitOps workflow with GitHub Actions. Alternatively, you can only do the demo locally or directly through Terraform Cloud.
+- Terraform CLI installed on your machine. You can download the latest version from the [Terraform website](https://www.terraform.io/downloads.html). Alternatively, you can use the .devcontainer in this repository to get up and running quickly.
+- GitHub account as this demo uses GitHub Actions to automate the DNS change management process. If you would like to set up a GitOps workflow with GitHub Actions. Alternatively, you can only do the demo locally or directly through Terraform Cloud.
 - [Terraform Cloud](https://app.terraform.io/signup/account) account and an API token. You can create a new token in the [Terraform Cloud user settings](https://app.terraform.io/app/settings/tokens). Please take note of the token as you will need it later. This is not optional as you will need to use Terraform Cloud to run the Sentinel policy.
 
 ## Getting Started
 
-There are two parts of this demo. The first part is to setup and run the demo locally with Terraform Cloud. The second part is to setup GitHub Actions to automate the DNS change management process.
+There are two parts to this demo. The first part is to set up and run the demo locally with Terraform Cloud. The second part is to set up GitHub Actions to automate the DNS change management process.
 
 ### Part 1: Run the demo locally with Terraform Cloud
 
@@ -94,7 +94,7 @@ terraform import dnsimple_registered_domain.domain_b <domain_b>
 
 #### Step 4: Setup the Sentinel policy
 
-Create a new policy in Terraform Cloud. Copy the contents of `policies.sentinel` into the policy. You will also need to create a policy set and attach the policy to the policy set. When creating the policy set, you will should select the workspace you created in Step 2, otherwise the policies will be applied to all workspaces in your organization.
+Create a new policy in Terraform Cloud. Copy the contents of `policies.sentinel` into the policy. You will also need to create a policy set and attach the policy to the policy set. When creating the policy set, you will should select the workspace you created in Step 2, otherwise, the policies will be applied to all workspaces in your organization.
 
 You will need to fill out the following variables in the policy with your own values:
 
@@ -128,13 +128,13 @@ You can customize the policy to your liking by removing or adding rules.
 
 #### Step 5: Run a Speculative Plan
 
-Now that we have imported the domains and setup the Sentinel policy, we can run a speculative plan to see what changes will be made. Run the following command:
+Now that we have imported the domains and set up the Sentinel policy, we can run a speculative plan to see what changes will be made. Run the following command:
 
 ```bash
 terraform plan
 ```
 
-You should expect to see an error message idicating that a policy check failed. This is expected as we have not yet corrected the issues that the policy is flagging.
+You should expect to see an error message indicating that a policy check failed. This is expected as we have not yet corrected the issues that the policy is flagging.
 
 ```bash
 ## Policy 1: sentinel-demo-policy (hard-mandatory)
@@ -245,7 +245,7 @@ Result: true
 
 ### Part 2: Setup GitHub Actions to automate the DNS change management process
 
-In the first part of this demo, we setup the policy and ran a speculative plan to see what changes would be made. In this part, we will setup GitHub Actions to automate the DNS change management process. So that every time a change is made to the Terraform configuration, GitHub Actions will run a speculative plan and report back the results in the form of a pull request comment. This will allow you to review the changes and approve or reject them, all from the comfort of your GitHub repository.
+In the first part of this demo, we set up the policy and ran a speculative plan to see what changes would be made. In this part, we will set up GitHub Actions to automate the DNS change management process. So that every time a change is made to the Terraform configuration, GitHub Actions will run a speculative plan and report back the results in the form of a pull request comment. This will allow you to review the changes and approve or reject them, all from the comfort of your GitHub repository.
 
 #### Step 1: Create a new GitHub repository
 
@@ -266,7 +266,7 @@ Copy the following files from this repository to your new repository:
 
 #### Step 3: Setup the GitHub repository secrets
 
-In order for the GitHub Actions to run, we need to setup the following secrets in the GitHub repository:
+In order for the GitHub Actions to run, we need to set the following secrets in the GitHub repository:
 
 - `TF_API_TOKEN`: Terraform Cloud API token
 - `TF_CLOUD_ORGANIZATION`: Terraform Cloud organization name
@@ -284,7 +284,7 @@ git push origin main
 
 #### Step 5: Create a Pull Request
 
-Create a branch and commit and push the rest of the files to the branch. Then create a Pull Request. Once the Pull Request is created, you should see the GitHub Actions running. Once the GitHub Actions have completed, you should see a comment on the Pull Request with the results of the plan. If you would like to see what a failing plan looks like due to a policy check, you can change the `whois_privacy_enabled` to `false` in the `main.tf` file, or any of the other values in the Terraform configuration.
+Create a branch and commit and push the rest of the files to the branch. Then create a Pull Request. Once the Pull Request is created, you should see the GitHub Actions running. Once the GitHub Actions have been completed, you should see a comment on the Pull Request with the results of the plan. If you would like to see what a failing plan looks like due to a policy check, you can change the `whois_privacy_enabled` to `false` in the `main.tf` file, or any of the other values in the Terraform configuration.
 
 ```bash
 git checkout -b add-terraform-config
