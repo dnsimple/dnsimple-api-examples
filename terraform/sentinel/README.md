@@ -1,6 +1,6 @@
 # DNSimple Policy-as-Code with Terraform and Sentinel
 
-Welcome to the "DNSimple Policy-as-Code with Terraform and Sentinel" demo! Taking DNS management to a whole new level, this demo unveils the prowess of policy-as-code through the integration of Terraform, Sentinel, and DNSimple's robust DNS and Domain management platform. The fusion of these tools not only streamlines DNS record and Domain management but also enforces policy adherence, ensuring every change is compliant with your organization's standards.
+Welcome to the DNSimple's Policy-as-Code with Terraform and Sentinel demo. Taking DNS management to a whole new level, this demo unveils the prowess of policy-as-code through the integration of Terraform, Sentinel, and DNSimple's robust DNS and Domain management platform. The fusion of these tools not only streamlines DNS record and Domain management but also enforces policy adherence, ensuring every change is compliant with your organization's standards.
 
 Here's a sneak peek of what you will delve into in this demo:
 
@@ -26,7 +26,7 @@ By the end of this demo, you'll have a solid understanding of how to utilize Ter
 
 - Two domains that are registered at DNSimple. Don't have an account? [Sign up for free](https://dnsimple.com/sign_up) today!
 You can also use the [DNSimple Sandbox](https://developer.dnsimple.com/sandbox/) to test this demo out and get a feel for the platform.
-- API access token with write access to the zone. You can create a new token in the [following our support article](https://support.dnsimple.com/articles/api-access-token/). Please take note of the token and your account ID as you will need them later.
+- API access token with write access to the zone. [Create a new token following our support article](https://support.dnsimple.com/articles/api-access-token/). Please take note of the token and your account ID as you will need them later.
 - Terraform CLI installed on your machine. You can download the latest version from the [Terraform website](https://www.terraform.io/downloads.html). Alternatively, you can use the .devcontainer in this repository to get up and running quickly.
 - GitHub account as this demo uses GitHub Actions to automate the DNS change management process. If you would like to set up a GitOps workflow with GitHub Actions. Alternatively, you can only do the demo locally or directly through Terraform Cloud.
 - [Terraform Cloud](https://app.terraform.io/signup/account) account and an API token. You can create a new token in the [Terraform Cloud user settings](https://app.terraform.io/app/settings/tokens). Please take note of the token as you will need it later. This is not optional as you will need to use Terraform Cloud to run the Sentinel policy.
@@ -299,7 +299,7 @@ Once you have reviewed the changes and are happy with them, you can merge the Pu
 
 Congratulations! You have successfully completed the "DNSimple Policy-as-Code with Terraform and Sentinel" demo. You have learned how to utilize Terraform, Sentinel, and DNSimple to establish a policy-driven DNS management framework, empowering your organization to democratize DNS management while ensuring policy adherence.
 
-When thinking about productionising and maturing your policy-as-code framework, here are some things to consider:
+When thinking about moving to production and maturing your policy-as-code framework, here are some things to consider:
 
 - **Modularize Policies**: In the current demo we created the policy manually in Terraform Cloud, however, to make the policy more reusable and easier to maintain, you can create a module for each policy and load them as a policy set in Terraform Cloud through version control. This will allow you to easily reuse the policies across multiple workspaces and organizations and also allow you to version control the policies with automated release processes and audit trails.
 - **Policy Testing**: As your policy-as-code framework matures, you will want to ensure that your policies are working as expected. You can do this by writing tests for your policies. You can read more about policy testing in the [Sentinel documentation](https://docs.hashicorp.com/sentinel/terraform/testing).
