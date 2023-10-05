@@ -1,0 +1,24 @@
+name: DNS Change Management Apply
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/dns-change-management/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  terraform:
+    uses: ./.github/workflows/terraform-apply.yml
+    with:
+      tf-workspace: "dns-change-management"
+      config-directory: "./terraform/dns-change-management"
+    secrets: inherit
+    permissions:
+      contents: read
