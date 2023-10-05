@@ -1,0 +1,3 @@
+dnsimple_token   = "your_token"
+dnsimple_account = "your_account_id"
+dnsimple_sandbox = false

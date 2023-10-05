@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e -u -o pipefail
+
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 [deploy|teardown]"
+  exit 1
+fi
+
+action=${1:-deploy}
+
+consul_server_url="http://127.0.0.1:8501/v1/agent"
+
+if [ "$action" = "deploy" ]; then
+  service_files=$(find config -name "*-service.json")
+
+  for service_file in $service_files; do
+    service=$(basename $service_file | sed 's/-service.json//')
+    echo "Registering service ${service}_1"
+    curl -X PUT -H "Content-Type: application/json" --data @$service_file ${consul_server_url}/service/register?replace-existing-checks=true
+  done
+fi
+
+if [ "$action" = "teardown" ]; then
+  service_files=$(find config -name "*-service.json")
+
+  for service_file in $service_files; do
+    service=$(basename $service_file | sed 's/-service.json//')
+    echo "Unregistering service ${service}_1"
+    curl -X PUT -H "Content-Type: application/json" ${consul_server_url}/service/deregister/${service}_1
+  done
+fi

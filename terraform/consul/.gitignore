@@ -1,0 +1,13 @@
+# Terraform generated content
+.terraform/
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# tfvars files
+*.tfvars
+
+# Consul service definitions
+web-service.json
+api-service.json
