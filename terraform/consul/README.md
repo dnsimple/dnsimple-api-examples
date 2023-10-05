@@ -1,10 +1,10 @@
 # DNSimple Network Infrastructure Automation with Consul and Terraform Demo
 
-Welcome to DNSimple's Network Infrastructure Automation with Consul and Terraform demo. This demo is designed to provide a structured environment for you to gain practical insights into infrastructure automation and service discovery. With a focus on real-world application, this demo guides you through a systematic process of setting up, deploying, and managing services in a simulated environment. By integrating DNSimple for domain management, Docker for containerization, and employing Consul for service discovery alongside Terraform for infrastructure as code, you'll experience the seamless interaction between these technologies. As you progress through the steps, from preparing configuration files to deploying and updating services, you'll grasp the essential concepts and practices that underpin modern network infrastructure automation. Whether you're looking to hone your skills or exploring new horizons in automation, this demo provides a comprehensive and engaging platform to enhance your understanding and capabilities in orchestrating network resources efficiently.
+Welcome to DNSimple's Network Infrastructure Automation with Consul and Terraform demo. This demo is designed to provide a structured environment for you to gain practical insights into infrastructure automation and service discovery. With a focus on real-world applications, this demo guides you through a systematic process of setting up, deploying, and managing services in a simulated environment. By integrating DNSimple for domain management, Docker for containerization, and employing Consul for service discovery alongside Terraform for infrastructure as code, you'll experience the seamless interaction between these technologies. As you progress through the steps, from preparing configuration files to deploying and updating services, you'll grasp the essential concepts and practices that underpin modern network infrastructure automation. Whether you're looking to hone your skills or explore new horizons in automation, this demo provides a comprehensive and engaging platform to enhance your understanding and capabilities in orchestrating network resources efficiently.
 
 What you'll gain from this demo:
 
-- Grasp the strategic advantage of Infrastructure as Code (IaC) through Consul and Terraform, enabling rapid, consistent and error-free provisioning of network resources which can significantly accelerate the time-to-market.
+- Grasp the strategic advantage of Infrastructure as Code (IaC) through Consul and Terraform, enabling rapid, consistent, and error-free provisioning of network resources which can significantly accelerate the time-to-market.
 - Dive into the automated service deployment and DNS record updates enabled by Consul-Terraform Sync, illustrating a model for maintaining real-time service availability and domain resolution which are essential for business continuity.
 - Practical insights into the seamless integration between DNSimple, Consul, and Terraform, providing a holistic view of the network infrastructure automation process.
 
@@ -27,11 +27,11 @@ cp config/api-service.json.example config/api-service.json
 cp config/web-service.json.example config/web-service.json
 ```
 
-Next you would need to update the `api-service.json` and `web-service.json` files with the zone which you have chosen to use for this demo. You can also take this chance to inspect the configuration of the services and familiarize yourself with the syntax and options available.
+Next, you would need to update the `api-service.json` and `web-service.json` files with the zone that you have chosen to use for this demo. You can also take this chance to inspect the configuration of the services and familiarize yourself with the syntax and options available.
 
 ### Step 2: Create the infrastructure
 
-In this demo, we will be using Docker Compose to create the infrastructure. This will create a Consul server and two Consul clients. The Consul clients will be running the `api-service` and `web-service` containers. In addition we will also be running the consul-terraform-sync container which will be responsible for syncing the Consul service catalog with the Terraform state.
+In this demo, we will be using Docker Compose to create the infrastructure. This will create a Consul server and two Consul clients. The Consul clients will be running the `api-service` and `web-service` containers. In addition, we will also be running the consul-terraform-sync container which will be responsible for syncing the Consul service catalog with the Terraform state.
 
 ```bash
 docker compose up -d
@@ -104,7 +104,7 @@ You should be able to see the changes in the logs from the CTS container as well
 
 ### Step 7: Cleanup
 
-Once you are done with the demo you can cleanup the changes by running the following command:
+Once you are done with the demo you can revert the changes by running the following command:
 
 ```bash
 ./bin/servicesctl teardown
@@ -112,7 +112,7 @@ Once you are done with the demo you can cleanup the changes by running the follo
 
 This will remove the services from Consul and also remove the DNS records from DNSimple as the CTS container reacts to the changes.
 
-Next you can stop the containers by running the following command:
+Next, you can stop the containers by running the following command:
 
 ```bash
 docker compose down
