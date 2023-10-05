@@ -1,6 +1,6 @@
 # Deploy on-premise DNS using CoreDNS and DNSimple
 
-DNSimple's CoreDNS plugin enables businesses and individual developers alike to leverage the extensibility of CoreDNS, while managing DNS records effortlessly through DNSimple's intuitive web application. Facilitate streamlined DNS record management and ensure that your on-premise DNS resolution is tightly aligned with any changes or updates made within the DNSimple platform. Whether managing a singular domain or juggling numerous domains with many DNS records, DNSimple's CoreDNS integration offers increased reliability, ease of management and enterprise-level stability.
+DNSimple's CoreDNS plugin enables businesses and individual developers alike to leverage the extensibility of CoreDNS, while effortlessly managing DNS records through DNSimple's intuitive web application. Facilitate streamlined DNS record management, and ensure your on-premise DNS resolution is tightly aligned with any changes or updates made within the DNSimple platform. Whether managing one domain or multiple domains with many DNS records, DNSimple's CoreDNS integration offers increased reliability, ease of management, and enterprise-level stability.
 
 ## Introduction
 
@@ -8,7 +8,7 @@ In this demo, we will use CoreDNS compiled with the [DNSimple CoreDNS plugin](ht
 
 ## Prerequisites
 
-- A machine where you can install and run CoreDNS (local workstation, physical server or virtual machine)
+- A machine where you can install and run CoreDNS (local workstation, physical server, or virtual machine)
 - A domain managed with DNSimple
 - An API token from DNSimple, which will allow CoreDNS to access DNSimple’s services
 - Basic knowledge of DNS and terminal/command line usage
@@ -16,13 +16,13 @@ In this demo, we will use CoreDNS compiled with the [DNSimple CoreDNS plugin](ht
 
 ### Step 1: Enable the DNSimple CoreDNS Integration
 
-1. From the DNSimple application, navigate to the 'Domain->Integrations' page and select 'Configure' next to the CoreDNS integration.
+1. From the DNSimple application, navigate to the 'Domain->Integrations' page, and select 'Configure' next to the CoreDNS integration.
 ![domain_integrations](./images/domain_integrations.png)
 
-2. Leave the Cluster Identifier value as `default` and note down your DNSimple `account_id` from the provided Corefile.
+2. Leave the Cluster Identifier value as `default`, and note down your DNSimple `account_id` from the provided Corefile.
 ![coredns_setup](./images/coredns_setup.png)
 
-3. Click 'Create Integration' and verify the CoreDNS integration is active.
+3. Click 'Create Integration', and verify the CoreDNS integration is active.
 ![coredns_active](./images/coredns_active.png)
 
 ### Step 2: Compile or Install CoreDNS
@@ -71,9 +71,9 @@ go generate && go build
 <summary>B: Download the Precompiled Binary</summary>
 <br>
 
-1. Go to the [DNSimple CoreDNS releases page](https://github.com/dnsimple/coredns-dnsimple/releases)
-2. Download the latest release for your OS
-3. Extract and move the binary to a location in your PATH
+1. Go to the [DNSimple CoreDNS releases page](https://github.com/dnsimple/coredns-dnsimple/releases).
+2. Download the latest release for your OS.
+3. Extract and move the binary to a location in your PATH.
 
 </details>
 
