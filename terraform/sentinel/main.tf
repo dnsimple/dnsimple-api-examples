@@ -2,7 +2,7 @@ resource "dnsimple_registered_domain" "domain_a" {
   contact_id = var.dnsimple_contact_id
   name       = var.dnsimple_domain_a
 
-  auto_renew_enabled    = true
+  auto_renew_enabled    = false
   dnssec_enabled        = true
   transfer_lock_enabled = true
   whois_privacy_enabled = false
