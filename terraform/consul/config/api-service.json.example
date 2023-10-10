@@ -1,0 +1,15 @@
+{
+    "ID": "api_1",
+    "Name": "api",
+    "Tags": [
+        "dnsimple",
+        "bar"
+    ],
+    "Port": 8889,
+    "Meta": {
+        "dnsimple_zone_name": "vegan.pizza",
+        "dnsimple_record_name": "$name",
+        "dnsimple_record_content": "$address"
+    },
+    "Check": null
+}

@@ -1,0 +1,32 @@
+{
+    "ID": "web_1",
+    "Name": "web",
+    "Tags": ["dnsimple", "foo"],
+    "Port": 8888,
+    "Meta": {
+        "dnsimple_default_zone": "vegan.pizza",
+        "dnsimple_default_record_type": "A",
+        "dnsimple_default_record_ttl": "1800",
+
+        "dnsimple_record_name": "$name",
+        "dnsimple_record_content": "$address",
+
+        "dnsimple_record_name-1": "$name.internal",
+        "dnsimple_record_content-1": "$node_address",
+
+        "dnsimple_record_name-2": "mail",
+        "dnsimple_record_type-2": "MX",
+        "dnsimple_record_content-2": "server.$name.vegan.pizza",
+        "dnsimple_record_priority-2": "10",
+
+        "dnsimple_record_name-3": "_sip._tcp",
+        "dnsimple_record_type-3": "SRV",
+        "dnsimple_record_content-3": "10 $port server.$name.vegan.pizza",
+        "dnsimple_record_priority-3": "0",
+        "dnsimple_record_ttl-3": "60",
+
+        "dnsimple_record_name-4": "server.$name",
+        "dnsimple_record_content-4": "$address"
+    },
+    "Check": null
+}

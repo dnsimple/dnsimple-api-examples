@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+    consul-server:
+        image: hashicorp/consul:1.15
+        container_name: consul-server
+        volumes:
+            - ./config/server.json:/consul/config/server.json:ro
+        networks:
+            - consul
+        ports:
+            - '8500:8500'
+            - '8600:8600/tcp'
+            - '8600:8600/udp'
+        command: 'agent -bootstrap-expect=1'
+
+    consul-client-a:
+        image: hashicorp/consul:1.15
+        container_name: consul-client-a
+        networks:
+            - consul
+        command: 'agent -node=client-a -join=consul-server -encrypt aPuGh+5UDskRAbkLaXRzFoSOcSM+5vAK+NEYOWHJH7w='
+        depends_on:
+            - consul-server
+
+    consul-client-b:
+        image: hashicorp/consul:1.15
+        container_name: consul-client-b
+        networks:
+            - consul
+        ports:
+            - '8501:8500'
+        command: 'agent -node=client-b -client=0.0.0.0 -join=consul-server -encrypt aPuGh+5UDskRAbkLaXRzFoSOcSM+5vAK+NEYOWHJH7w='
+        depends_on:
+            - consul-server
+
+    cts:
+        image: hashicorp/consul-terraform-sync:0.7
+        container_name: cts
+        volumes:
+            - ./config/cts-config.hcl:/consul-terraform-sync/config/cts-config.hcl:rw
+            - ./config/terraform.tfvars:/consul-terraform-sync/config/terraform.tfvars:ro
+        networks:
+            - consul
+        ports:
+            - '8558:8558'
+        command: 'consul-terraform-sync start --config-dir /consul-terraform-sync/config'
+        depends_on:
+            - consul-server
+
+networks:
+    consul:
+        driver: bridge
