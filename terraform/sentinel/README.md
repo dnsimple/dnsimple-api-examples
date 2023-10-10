@@ -28,7 +28,7 @@ By the end of this demo, you'll have a solid understanding of how to utilize Ter
 You can also use the [DNSimple Sandbox](https://developer.dnsimple.com/sandbox/) to test this demo out and get a feel for the platform.
 - API access token with write access to the zone. [Create a new token following our support article](https://support.dnsimple.com/articles/api-access-token/). Please take note of the token and your account ID as you will need them later.
 - Terraform CLI installed on your machine. Download the latest version from the [Terraform website](https://www.terraform.io/downloads.html). Alternatively, use the .devcontainer in this repository to get up and running quickly.
-- A GitHub account, as this demo uses GitHub Actions to automate the DNS change management process. If you would like to set up a GitOps workflow with GitHub Actions. Alternatively, do the demo locally or directly through Terraform Cloud.
+- If you would like to set up a GitOps workflow with GitHub Actions, then you will require a GitHub account, as this demo uses GitHub Actions to automate the DNS change management process. Alternatively, you can do the demo locally or directly through Terraform Cloud.
 - [Terraform Cloud](https://app.terraform.io/signup/account) account and an API token. Create a new token in the [Terraform Cloud user settings](https://app.terraform.io/app/settings/tokens). Please take note of the token; you will need it later. This is not optional, as you need to use Terraform Cloud to run the Sentinel policy.
 
 ## Getting Started
