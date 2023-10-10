@@ -77,6 +77,16 @@ go generate && go build
 
 </details>
 
+<details>
+<summary>C: DNSimple CoreDNS Docker Image</summary>
+<br>
+
+1. Go to [DNSimple CoreDNS docker images](https://hub.docker.com/r/dnsimple/coredns/tags).
+2. Download the latest.
+3. Follow the instructions to launch the container with a valid Corefile.
+
+</details>
+
 ### Step 3: Export your DNSimple Credentials
 
 ```shell
@@ -97,8 +107,8 @@ Replace `DNSIMPLE_ACCOUNT_ID` and `DNSIMPLE_TOKEN` values with your actual DNSim
         refresh    60s
     }
     forward . 1.1.1.1
-    cache
     log
+    debug
     errors
 }
 ```
@@ -121,4 +131,4 @@ dig @{DNS_SERVER_ADDRESS} {DNSIMPLE_MANAGED_DOMAIN.TLD} NS
 
 ### Conclusion:
 
-You should now have a basic on-premise DNS server setup using CoreDNS and DNSimple. Make sure to adjust firewall rules, routing, and security settings according to your network setup and security policy to ensure the DNS server operates reliably and securely.
+You should now have a basic on-premise DNS server setup using CoreDNS and DNSimple. Make sure to adjust firewall rules, routing, and security settings according to your network setup and security policy to ensure the DNS server operates reliably and securely. Check out our other [API examples](https://github.com/dnsimple/dnsimple-api-examples), including the ability to manage DNS zone records, domains, and SSL certificates using our many client libraries or Terraform.
