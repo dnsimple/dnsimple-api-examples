@@ -1,0 +1,37 @@
+name: Terraform Apply
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/sentinel/**'
+      - '.github/workflows/sentinel-demo-apply.yml'
+
+env:
+  TF_CLOUD_ORGANIZATION: "DNSimple"
+  TF_WORKSPACE: "sentinel-demo"
+  TF_TOKEN_app_terraform_io: "${{ secrets.TF_API_TOKEN }}"
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: "./terraform/sentinel"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -no-color
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
