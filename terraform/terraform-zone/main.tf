@@ -1,6 +1,6 @@
 locals {
   # Customize the domain name
-  domain = "87c1b7e6-8b57-4129-a1ae-cd73027a68c8.com"
+  domain = "example.com"
 }
 
 resource "dnsimple_zone_record" "bd261c9c" {
