@@ -12,12 +12,13 @@ This repository contains examples showing how to use the DNSimple API and variou
 * [dnsimple-rust](./rust)
 
 **Other:**
+
 * [curl](./curl)
 
 ## Terraform
 
-* [dns change management](./terraform/dns-change-management/)
+* [Terraform Zone management](./terraform/terraform-zone/)
 
 ## Interested In Contributing?
 
-Please review the CONTRIBUTING.markdown document first.
+Please review the [CONTRIBUTING.md](./CONTRIBUTING.md) document first.

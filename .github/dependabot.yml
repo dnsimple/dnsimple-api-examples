@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: "terraform"
-    directory: "/terraform/dns-change-management"
+    directory: "/terraform/terraform-zone"
     schedule:
       interval: "monthly"
     labels:

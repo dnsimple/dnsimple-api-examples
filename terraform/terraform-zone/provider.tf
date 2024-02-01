@@ -1,16 +1,8 @@
 terraform {
-  cloud {
-    organization = "DNSimple"
-
-    workspaces {
-      name = "dns-change-management"
-    }
-  }
-
   required_providers {
     dnsimple = {
       source  = "dnsimple/dnsimple"
-      version = "~> 1.3.0"
+      version = "~> 1.4.0"
     }
   }
 }
