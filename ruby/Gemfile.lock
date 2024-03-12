@@ -1,19 +1,20 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    dnsimple (4.4.0)
+    dnsimple (9.0.0)
       httparty
     httparty (0.21.0)
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    mini_mime (1.1.2)
+    mini_mime (1.1.5)
     multi_xml (0.6.0)
 
 PLATFORMS
+  arm64-darwin-23
   ruby
 
 DEPENDENCIES
-  dnsimple (~> 4.0)
+  dnsimple (~> 9.0)
 
 BUNDLED WITH
-   1.16.0
+   2.5.6

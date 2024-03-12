@@ -4,7 +4,7 @@ The files in this directory demonstrate how to use the DNSimple Golang API wrapp
 
 ## Installation
 
-If you are running Go 11 or higher, then you should be able to start running examples immediately.
+If you are running Go 1.21 or higher, then you should be able to start running examples immediately.
 
 If you are installing an older version, then you will need to run the following:
 
