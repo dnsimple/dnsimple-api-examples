@@ -6,6 +6,7 @@ This repository contains examples showing how to use the DNSimple API and variou
 
 * [dnsimple-elixir](./elixir)
 * [dnsimple-go](./golang)
+* [dnsimple-node](./node)
 * [dnsimple-php](./php)
 * [dnsimple-python](./python)
 * [dnsimple-ruby](./ruby)
@@ -13,7 +14,9 @@ This repository contains examples showing how to use the DNSimple API and variou
 
 **Other:**
 
+* [coredns](./coredns)
 * [curl](./curl)
+* [terraform](./terraform)
 
 ## Terraform
 
