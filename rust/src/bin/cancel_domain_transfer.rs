@@ -42,6 +42,5 @@ pub fn cancel_domain_transfer(token: &str, domain_name: &str, transfer_id: u64) 
             .registrar()
             .cancel_domain_transfer(account_id, domain_name.into(), transfer_id);
 
-    // TODO: Change this when we update the crate with proper error handling
-    println!("{:?}", response.unwrap().errors.unwrap());
+    println!("{:?}", response.unwrap_err());
 }
