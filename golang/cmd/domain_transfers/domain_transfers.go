@@ -8,7 +8,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/dnsimple/dnsimple-go/dnsimple"
+	"github.com/dnsimple/dnsimple-go/v5/dnsimple"
 	"golang.org/x/oauth2"
 )
 

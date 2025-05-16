@@ -8,7 +8,7 @@ First you will need to ensure you have python 3 installed.
 
 Once you are sure python 3 is installed it's time to install the Python API client
 
-`pip xxx`
+`pip install dnsimple`
 
 You can also install the Python API client by cloning it from github
 

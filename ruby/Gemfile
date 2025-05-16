@@ -4,4 +4,4 @@ source "https://rubygems.org"
 
 # gem "rails"
 
-gem "dnsimple", "~> 9.0"
+gem "dnsimple", "~> 10.0"
