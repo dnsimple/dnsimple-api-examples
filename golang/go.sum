@@ -1,7 +1,7 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/dnsimple/dnsimple-go/v5 v5.0.0 h1:uRncBLZxYXTyUbSBbUwcyJG6d6lNZw9JoMpO3dZVN6U=
-github.com/dnsimple/dnsimple-go/v5 v5.0.0/go.mod h1:KztNfr/vJ3VG1jBi7Pq796ZgysADnnMGZe2Gn4CNY1U=
+github.com/dnsimple/dnsimple-go/v6 v6.0.0 h1:Xb1yjMUjJQKmVksSc0UD+J0kMflxYe8LcUHDTu9AJKU=
+github.com/dnsimple/dnsimple-go/v6 v6.0.0/go.mod h1:goHncAE7jloC/EcSBukgzziibWcpiYBDeN5iN0f3YRc=
 github.com/google/go-cmp v0.5.2 h1:X2ev0eStA3AbceY54o37/0PQ/UWqKEiiO2dKL5OPaFM=
 github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-querystring v1.1.0 h1:AnCroh3fv4ZBgVIf1Iwtovgjaw/GiKJo8M8yD/fhyJ8=

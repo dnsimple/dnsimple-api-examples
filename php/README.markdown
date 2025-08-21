@@ -26,10 +26,10 @@ Now you can run individual scripts either by running the script directly or by p
 
 For example:
 
-`./badauth.php`
+`./bad_auth.php`
 
 And
 
-`php badauth.php`
+`php bad_auth.php`
 
 Should both work.

@@ -1,9 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bigdecimal (3.1.9)
-    csv (3.3.4)
-    dnsimple (10.0.0)
+    bigdecimal (3.2.2)
+    csv (3.3.5)
+    dnsimple (11.0.0)
       httparty
     httparty (0.23.1)
       csv
@@ -18,7 +18,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  dnsimple (~> 10.0)
+  dnsimple (~> 11.0)
 
 BUNDLED WITH
    2.5.6

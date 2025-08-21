@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "dnsimple": "^10.0.0"
+    "dnsimple": "^11.0.0"
   }
 }

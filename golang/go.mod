@@ -3,7 +3,7 @@ module dnsimple.com/dnsimple-api-examples
 go 1.24
 
 require (
-	github.com/dnsimple/dnsimple-go/v5 v5.0.0
+	github.com/dnsimple/dnsimple-go/v6 v6.0.0
 	golang.org/x/oauth2 v0.30.0
 )
 
