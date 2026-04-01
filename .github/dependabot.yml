@@ -15,3 +15,5 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - dependencies
+    cooldown:
+      default-days: 3
