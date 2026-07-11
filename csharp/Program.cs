@@ -1,4 +1,4 @@
-// Usage: TOKEN=your-token dotnet run -- <command> [args...]
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- <command> [args...]
 //
 // Each command below corresponds to one example under Examples/, mirroring
 // the examples found in the other language directories in this repository.
@@ -22,7 +22,7 @@ var commands = new Dictionary<string, Action<string[]>>
 
 if (args.Length == 0 || !commands.TryGetValue(args[0], out var command))
 {
-    Console.Error.WriteLine("Usage: TOKEN=your-token dotnet run -- <command> [args...]");
+    Console.Error.WriteLine("Usage: TOKEN=your-token dotnet run --framework net10.0 -- <command> [args...]");
     Console.Error.WriteLine();
     Console.Error.WriteLine("Available commands:");
     foreach (var name in commands.Keys.OrderBy(n => n, StringComparer.Ordinal))

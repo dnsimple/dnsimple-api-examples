@@ -3,7 +3,7 @@ using dnsimple.Services;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- transfer_domain example.com 42 code
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- transfer_domain example.com 42 code
 // where 42 is the contact id that will be used as the registrant and code
 // is the authorization code needed to transfer the domain.
 public static class TransferDomain
@@ -19,7 +19,7 @@ public static class TransferDomain
 
         if (args.Length < 3 || !long.TryParse(args[1], out var registrantId))
         {
-            Console.Error.WriteLine("Usage: dotnet run -- transfer_domain <domain-name> <registrant-contact-id> <auth-code>");
+            Console.Error.WriteLine("Usage: dotnet run --framework net10.0 -- transfer_domain <domain-name> <registrant-contact-id> <auth-code>");
             Environment.Exit(1);
             return;
         }

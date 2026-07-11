@@ -4,14 +4,14 @@ using Newtonsoft.Json;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- create_contact '{"email":"john.smith@example.com","first_name":"John","last_name":"Smith","address1":"111 SW 1st Street","city":"Miami","state_province":"FL","postal_code":"11111","country":"US","phone":"+1 321 555 4444"}'
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- create_contact '{"email":"john.smith@example.com","first_name":"John","last_name":"Smith","address1":"111 SW 1st Street","city":"Miami","state_province":"FL","postal_code":"11111","country":"US","phone":"+1 321 555 4444"}'
 public static class CreateContact
 {
     public static void Run(string[] args)
     {
         if (args.Length != 1)
         {
-            Console.Error.WriteLine("Usage: dotnet run -- create_contact '{json}'");
+            Console.Error.WriteLine("Usage: dotnet run --framework net10.0 -- create_contact '{json}'");
             Environment.Exit(1);
         }
 

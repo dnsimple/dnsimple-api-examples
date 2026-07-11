@@ -2,7 +2,7 @@ using dnsimple;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- tld_extended_attributes uk
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- tld_extended_attributes uk
 public static class TldExtendedAttributes
 {
     public static void Run(string[] args)

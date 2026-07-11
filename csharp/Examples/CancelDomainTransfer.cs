@@ -2,7 +2,7 @@ using dnsimple;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- cancel_domain_transfer example.com 42
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- cancel_domain_transfer example.com 42
 // where 42 is the domain transfer id
 public static class CancelDomainTransfer
 {
@@ -17,7 +17,7 @@ public static class CancelDomainTransfer
 
         if (args.Length < 2 || !long.TryParse(args[1], out var transferId))
         {
-            Console.Error.WriteLine("Usage: dotnet run -- cancel_domain_transfer <domain-name> <transfer-id>");
+            Console.Error.WriteLine("Usage: dotnet run --framework net10.0 -- cancel_domain_transfer <domain-name> <transfer-id>");
             Environment.Exit(1);
             return;
         }

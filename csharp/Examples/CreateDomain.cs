@@ -3,7 +3,7 @@ using dnsimple.Services;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- create_domain example.com
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- create_domain example.com
 public static class CreateDomain
 {
     public static void Run(string[] args)

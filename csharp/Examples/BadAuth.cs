@@ -2,7 +2,7 @@ using dnsimple;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: dotnet run -- bad_auth
+// Usage: dotnet run --framework net10.0 -- bad_auth
 //
 // Note that this example intentionally sends a bogus access token to show
 // what happens when authentication fails.

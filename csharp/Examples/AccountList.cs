@@ -2,7 +2,7 @@ using dnsimple;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- account_list
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- account_list
 //
 // This example only works with a User token: an Account token already
 // uniquely identifies a single account, so listing accounts is only

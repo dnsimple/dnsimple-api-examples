@@ -2,7 +2,7 @@ using dnsimple;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- domains
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- domains
 public static class Domains
 {
     public static void Run(string[] args)

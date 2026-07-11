@@ -2,7 +2,7 @@ using dnsimple;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- domain_transfers example.com 42
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- domain_transfers example.com 42
 // where 42 is the domain transfer id
 public static class DomainTransfers
 {
@@ -17,7 +17,7 @@ public static class DomainTransfers
 
         if (args.Length < 2 || !long.TryParse(args[1], out var transferId))
         {
-            Console.Error.WriteLine("Usage: dotnet run -- domain_transfers <domain-name> <transfer-id>");
+            Console.Error.WriteLine("Usage: dotnet run --framework net10.0 -- domain_transfers <domain-name> <transfer-id>");
             Environment.Exit(1);
             return;
         }

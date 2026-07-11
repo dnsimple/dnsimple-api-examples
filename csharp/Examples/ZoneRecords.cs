@@ -2,7 +2,7 @@ using dnsimple;
 
 namespace DnsimpleExamples.Examples;
 
-// Usage: TOKEN=your-token dotnet run -- zone_records example.com
+// Usage: TOKEN=your-token dotnet run --framework net10.0 -- zone_records example.com
 public static class ZoneRecords
 {
     public static void Run(string[] args)
