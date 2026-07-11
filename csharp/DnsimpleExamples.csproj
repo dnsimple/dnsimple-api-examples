@@ -2,16 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFrameworks>net10.0;net9.0</TargetFrameworks>
     <RootNamespace>DnsimpleExamples</RootNamespace>
     <AssemblyName>dnsimple-examples</AssemblyName>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <!-- The DNSimple package targets net9.0, but roll forward to whatever
-         .NET runtime is installed (e.g. 10.x) so `dotnet run` still works
-         on machines that only have a newer major version installed. -->
-    <RollForward>LatestMajor</RollForward>
   </PropertyGroup>
 
   <ItemGroup>

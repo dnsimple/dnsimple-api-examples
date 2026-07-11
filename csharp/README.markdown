@@ -4,7 +4,7 @@ The files in this directory demonstrate how to use the DNSimple C# API wrapper t
 
 ## Installation
 
-You need the [.NET 9 SDK](https://dotnet.microsoft.com/download) or higher installed.
+You need the [.NET 10 SDK](https://dotnet.microsoft.com/download) (LTS) installed. The project multi-targets `net10.0` and `net9.0`, and the .NET 10 SDK can build and run both.
 
 Restore the [DNSimple](https://www.nuget.org/packages/DNSimple) NuGet package:
 
@@ -14,17 +14,19 @@ dotnet restore
 
 ## Running
 
-Each command lives in its own file under `Examples/` and is dispatched from `Program.cs` by name. For example:
+Each command lives in its own file under `Examples/` and is dispatched from `Program.cs` by name. Because the project multi-targets, pass the framework you want to run on. For example:
 
 ```shell
-TOKEN=your-token dotnet run -- auth
+TOKEN=your-token dotnet run --framework net10.0 -- auth
 ```
 
 To run commands that require additional arguments:
 
 ```shell
-TOKEN=your-token dotnet run -- check example.com
+TOKEN=your-token dotnet run --framework net10.0 -- check example.com
 ```
+
+Substitute `net9.0` to run on .NET 9.
 
 Running with no arguments (or an unknown command) prints usage and the list of available commands.
 
