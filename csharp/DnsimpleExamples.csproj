@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net10.0;net9.0</TargetFrameworks>
+    <RootNamespace>DnsimpleExamples</RootNamespace>
+    <AssemblyName>dnsimple-examples</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DNSimple" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>

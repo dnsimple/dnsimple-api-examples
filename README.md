@@ -4,6 +4,7 @@ This repository contains examples showing how to use the DNSimple API and variou
 
 ## API Clients
 
+* [dnsimple-csharp](./csharp)
 * [dnsimple-elixir](./elixir)
 * [dnsimple-go](./golang)
 * [dnsimple-node](./node)
